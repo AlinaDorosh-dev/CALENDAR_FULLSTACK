@@ -1,0 +1,112 @@
+.register-form {
+  margin: 3rem auto;
+  width: 80vw;
+  border: 1px solid rgb(80, 78, 78);
+  max-width: 600px;
+  border-radius: 0.3rem;
+  padding: 2rem;
+  box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
+}
+
+.register-form input {
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.5rem;
+  background-color: antiquewhite;
+  transition: all 0.15s ease-in-out;
+  margin: 1rem auto;
+  display: block;
+}
+
+.register-form input:focus {
+  border: 3px solid transparent;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  z-index: 2;
+}
+
+.register-form .submit-btn {
+  display: block;
+  padding: 0.5rem;
+  width: 90%;
+  margin: 3rem auto;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  color: white;
+  background-color: rgb(41, 39, 39);
+}
+
+.register-form .submit-btn:hover {
+  color: #d98324;
+  cursor: pointer;
+}
+
+.register-form h2 {
+  margin-left: 1.3rem;
+  display: inline;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.3rem;
+  background: rgb(41, 39, 39);
+  color: #fff;
+  padding: 0.25rem;
+  /* position: relative;
+  bottom: -10px; */
+  width: 90%;
+  margin: 1rem auto;
+  display: block;
+}
+
+.instructions > svg {
+  margin-right: 0.5rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.line {
+  display: inline-block;
+}
+
+.sign-in {
+  color: rgb(41, 39, 39);
+  line-height: 2rem;
+  font-weight: bold;
+}
+
+.sign-in a {
+  color: antiquewhite;
+  font-size: 1.3rem;
+}
+
+.sign-in a:hover {
+  color: #d98324;
+}

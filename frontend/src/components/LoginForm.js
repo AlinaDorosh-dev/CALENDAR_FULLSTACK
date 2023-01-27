@@ -1,7 +1,7 @@
 import classes from"./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiRequest } from "../utils/apiRequest";
+import { apiPostRequest } from "../utils/apiPostRequest";
 const LoginForm = () => {
   const emailRef = useRef();
   const errRef = useRef();
@@ -25,17 +25,8 @@ const LoginForm = () => {
     setSuccess(true);
     setPwd("");
     setEmail("");
-    const postOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email:email,
-          password:pwd
-        })
-      }
-      const response = await apiRequest(LOGIN_URL, postOptions);
+   
+      const response = await apiPostRequest(LOGIN_URL, email, pwd);
       const data = await response.json();
       const {token,id} = data.data;
 

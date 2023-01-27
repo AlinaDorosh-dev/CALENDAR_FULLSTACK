@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 const MainPage = () => {
   return (
     <div className={classes["main-page"]}>
-      <h1>My calendar</h1>
+     
 
       <LoginForm />
     </div>
