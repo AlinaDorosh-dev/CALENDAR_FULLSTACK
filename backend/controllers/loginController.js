@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const Model = require("../models/loginModel");
-const { generateToken, verifyToken } = require("../lib/util");
+const { generateToken, verifyToken } = require("../middleware/tokenMidlware");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -61,6 +61,7 @@ router.post("/login", async (req, res) => {
       if (validPassword) {
         // generar un token
         const user = {
+          id: data._id,
           email: data.email,
           role: data.role,
         };
@@ -116,5 +117,7 @@ router.get("/refresh", verifyToken, (req, res) => {
     error: null,
   });
 });
+
+
 
 module.exports = router;

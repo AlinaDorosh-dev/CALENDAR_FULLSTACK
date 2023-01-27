@@ -1,11 +1,13 @@
 require("dotenv").config();
-const cors = require("cors")
+const cors = require("cors");
 const express = require("express");
+const colors = require("colors")
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 //Importar controladores
-//const users = require("./Controller/userController");
-const logins = require("./controllers/loginController")
+const events = require("./controllers/eventController");
+const logins = require("./controllers/loginController");
+const {errorHandler} = require("./middleware/errorMiddleware")
 //Obtener la info del archivo env
 
 //almacenar la cadena de conexion
@@ -34,13 +36,17 @@ db.on("disconnected", () => {
 });
 const PORT = 8001;
 const app = express();
-app.use(cors())
+app.use(cors());
 //Analizar archivos json
 
 app.use(express.json());
 
-//app.use("/users", users);
-app.use("/auth", logins)
+//Analizar urlencoded
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/calendar", require("./routes/eventRoutes"));
+app.use("/auth", logins);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

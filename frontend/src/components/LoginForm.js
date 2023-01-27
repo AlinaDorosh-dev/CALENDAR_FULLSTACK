@@ -1,11 +1,11 @@
 import classes from"./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
 const LoginForm = () => {
   const emailRef = useRef();
   const errRef = useRef();
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -35,9 +35,16 @@ const LoginForm = () => {
           password:pwd
         })
       }
-      const result = await apiRequest(LOGIN_URL, postOptions);
+      const response = await apiRequest(LOGIN_URL, postOptions);
+      const data = await response.json();
+      const {token,id} = data.data;
+
+      // set token to localstorage item
+      localStorage.setItem('token', token);
+      localStorage.setItem('id', id);
       
-    //   localStorage.setItem('myData', data);
+      console.log("token", data.data.token);
+      navigate('/calendar');
   };
 
   return (
@@ -69,12 +76,12 @@ const LoginForm = () => {
           placeholder="Password"
         />
 
-        <button className="submit-btn">Sign In</button>
+        <button className={classes["submit-btn"]}>Sign In</button>
 
-        <p className="sign-up">
+        <p className={classes["sign-up"]}>
           Need an account? <br />
           <span>
-            {/* <Link to="/signup">SIGN UP</Link> */}
+            <Link to="/signup">SIGN UP</Link>
           </span>
         </p>
       </form>
