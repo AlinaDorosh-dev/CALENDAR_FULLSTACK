@@ -3,15 +3,20 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const Model = require("../models/loginModel");
-const { generateToken, verifyToken } = require("../middleware/tokenMidlware");
+const LoginModel = require("../models/loginModel");
+const { generateToken } = require("../middleware/tokenMidlware");
+const { getFutureDate } = require("../utils/dateGenerator");
 
-router.post("/signup", async (req, res) => {
+const register = async (req, res) => {
   try {
-    const data = new Model({
+    const data = new LoginModel({
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 10),
       role: req.body.role,
+      name: req.body.name,
+      registerAt: getFutureDate(2025, 2030),
+      lastLogin: getFutureDate(2031, 2035),
+      isActive: false,
     });
     data
       .save()
@@ -48,11 +53,11 @@ router.post("/signup", async (req, res) => {
       });
     }
   }
-});
+};
 
-router.post("/login", async (req, res) => {
+const login = async (req, res) => {
   try {
-    const data = await Model.findOne({ email: req.body.email }).exec();
+    const data = await LoginModel.findOne({ email: req.body.email }).exec();
     if (data) {
       const validPassword = await bcrypt.compare(
         req.body.password,
@@ -67,6 +72,13 @@ router.post("/login", async (req, res) => {
         };
         const token = generateToken(user, false);
         const refreshToken = generateToken(user, true);
+        const lastLoginYear = parseInt(
+          data.lastLogin.toISOString().slice(0, 4)
+        );
+        console.log(lastLoginYear);
+
+        data.lastLogin = getFutureDate(lastLoginYear + 6, +lastLoginYear + 1);
+        await data.save();
         res.status(200).json({
           status: "succeeded",
           data: {
@@ -75,11 +87,11 @@ router.post("/login", async (req, res) => {
             role: data.role,
             token,
             refreshToken,
+            lastLogin:data.lastLogin
           },
           error: null,
-        })
+        });
         console.log(`You have logged with ${data.email}`);
-        
       } else {
         res.status(401).json({
           status: "failed",
@@ -101,23 +113,21 @@ router.post("/login", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-router.get("/refresh", verifyToken, (req, res) => {
+const refresh = (req, res) => {
   if (!req.user) {
     return res.status(400).send("Access denied");
   }
-  const { email, role, exp } = req.user;
+  const { _id, email, role, exp } = req.user;
   res.status(200).json({
     status: "Succeeded",
     data: {
-      token: generateToken({ email, role }, false),
-      refreshToken: generateToken({ email, role }, true),
+      token: generateToken({ _id, email, role }, false),
+      refreshToken: generateToken({ _id, email, role }, true),
     },
     error: null,
   });
-});
+};
 
-
-
-module.exports = router;
+module.exports = { register, login, refresh };

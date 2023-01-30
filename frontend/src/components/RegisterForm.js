@@ -8,8 +8,11 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { apiPostRequest } from "../utils/apiPostRequest";
+import apiRequest from "../utils/apiRequest";
+//Regex for validate name and surname
 
+//Starts with lower or uppercase letter, followed by l/u case letter, number, hyphon(-) or underscore(_) // {from 4 to 24 char}
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 //Regex for validate Email
 
 const EMAIL_REGEX =
@@ -27,6 +30,11 @@ const RegisterForm = () => {
   //Returns object with single property CURRENT
   const emailRef = useRef(); //Set focus in user input when component loads
   const errRef = useRef(); //Set focus if we get error, so screenreader can read it
+
+  //States for name
+  const [userName, setUserName] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [userNameFocus, setUserNameFocus] = useState(false);
 
   //States for Email field
   const [email, setEmail] = useState("");
@@ -46,12 +54,6 @@ const RegisterForm = () => {
   // State for error message
   const [errMsg, setErrMsg] = useState("");
 
-  // State for successfull submit
-  const [success, setSuccess] = useState(false);
-
-  //State for modal
-  //const [openModal, setOpenModal] = useState(false);
-
   //Put focus in email field
   //Dependency array is empty, so it only happens, when the component loads
   useEffect(() => {
@@ -62,6 +64,11 @@ const RegisterForm = () => {
     const result = EMAIL_REGEX.test(email); //email validation returns boolean
     setValidEmail(result);
   }, [email]);
+
+  useEffect(() => {
+    const result = USER_REGEX.test(userName); //email validation returns boolean
+    setValidName(result);
+  }, [userName]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd); //Pwd validation returns boolean
@@ -76,22 +83,6 @@ const RegisterForm = () => {
     setErrMsg("");
   }, [email, pwd, matchPwd]);
   const navigate = useNavigate();
-  // const addNewUser = async (email, password) => {
-  //   try {
-  //     const response = await fetch(USERS_API, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ email, password }),
-  //     });
-  //     if (!response.ok) throw Error("Please reload the app");
-  //   } catch (err) {
-  //     errMsg = err.message;
-  //   } finally {
-  //     return errMsg;
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,29 +93,28 @@ const RegisterForm = () => {
       setErrMsg("invalid Entry");
       return;
     }
-    // setSuccess(true); //just for try to submit without backend
-    // console.log("Succesfull submit");
-    // addNewUser(email, pwd);
-    const response = await apiPostRequest(USERS_API, email, pwd);
-    const data = await response.json();
-    const { token, id } = data.data;
-
-    // set token to localstorage item
-    localStorage.setItem("token", token);
-    localStorage.setItem("id", id);
-
-    console.log("token", data.data.token);
-
-    // setPwd("");
-    // setEmail("");
-    // setMatchPwd("");
-    //  setOpenModal(true);
-    navigate("/calendar");
+const postOption ={
+  method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: pwd,
+        name: userName
+      }),
+}
+    await apiRequest(USERS_API, postOption);
+    setPwd("");
+    setEmail("");
+    setMatchPwd("");
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000);
   };
 
   return (
     <>
-      {/* {openModal && <LoginModal setOpenModal={setOpenModal} />} */}
       <section className={classes["register-form"]}>
         {/* Parragraph for display error message.
         If no error we aply class offscreen,which removes it from visible area of screen,
@@ -140,6 +130,47 @@ const RegisterForm = () => {
         <h1>Register</h1>
 
         <form onSubmit={handleSubmit}>
+
+        <label htmlFor='userName'>
+            <h2>Name:</h2>
+            <span className={validName ? classes.valid : classes.hide}>
+              <FontAwesomeIcon icon={faCheck} />
+            </span>
+            <span
+              className={validName || !userName ? classes.hide : classes.invalid}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </span>
+          </label>
+          <input
+            type='text'
+            id='userName'
+            autoComplete='off'
+            onChange={(e) => setUserName(e.target.value)}
+            required
+            aria-invalid={validName ? "false" : "true"}
+            //Accessability(aria described by element with id "uidnote" for screenreaders)
+            aria-describedby='uidnote'
+            onFocus={() => setUserNameFocus(true)}
+            onBlur={() => setUserNameFocus(false)}
+            value={userName}
+          />
+          {/* This paragraph will be displayed only when input onFocus, at least 1 char is typed and if validation fails */}
+          <p
+            id='uidnote'
+            className={
+              emailFocus && email && !validEmail
+                ? classes.instructions
+                : classes.offscreen
+            }
+          >
+            <FontAwesomeIcon icon={faInfoCircle} />
+            Name hast to have at least 
+          </p>
+
+
+
+
           <label htmlFor='email'>
             <h2>Email:</h2>
             <span className={validEmail ? classes.valid : classes.hide}>

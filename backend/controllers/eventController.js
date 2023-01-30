@@ -5,39 +5,7 @@ const asyncHandler = require("express-async-handler");
 //importamos modelo con schema correspondiente
 const Event = require("../models/eventModel");
 
-// router.get("/events", async (req, res) => {
-//res.send(`get document id ${req.params.id}`);
 
-//The exec() method executes a search for a match in a specified string and returns a result array, or null
-//   try {
-//    await  Model.find({"user": "63d0dee3bed5ce7c993b5ecf"})
-//       .exec()
-//       .then((data) =>
-//         res.status(200).json({ status: "succeeded", data, error: null })
-//       );
-//       console.log(req.params)
-//       console.log(id);
-//   } catch (error) {
-//     res.status(404).json({
-//       status: "failed",
-//       data: null,
-//       error: error.message,
-//     });
-//   }
-// try {
-//     const events = await Model.find().populate("user", "name")
-//     return res.json({
-//       ok: true,
-//       events
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       ok: false,
-//       msg: "Please, contact the administrator",
-//     });
-//   }
-// });
 
 const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({ user: req.user.id });

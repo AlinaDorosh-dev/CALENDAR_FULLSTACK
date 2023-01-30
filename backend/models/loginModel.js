@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const loginSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -26,8 +29,7 @@ const loginSchema = new Schema({
   },
   registerAt: {
     type: Date,
-    min: "2025-01-01",
-    max: "2030-12-31",
+    immutable: true,
   },
   isActive: {
     type: Boolean,
@@ -35,7 +37,7 @@ const loginSchema = new Schema({
   },
   lastLogin: {
     type: Date,
-    min: this.registerAt
+    default: ()=> Date.now().toISOString(),
   },
 });
 

@@ -1,18 +1,13 @@
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
-const colors = require("colors")
+const colors = require("colors");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-//Importar controladores
-const events = require("./controllers/eventController");
-const logins = require("./controllers/loginController");
-const {errorHandler} = require("./middleware/errorMiddleware")
-//Obtener la info del archivo env
+// const { errorHandler } = require("./middleware/errorMiddleware");
 
 //almacenar la cadena de conexion
 const mongoString = process.env.DATABASE_URL;
-console.log(mongoString);
 
 //Conectar db
 mongoose.connect(mongoString, { useNewUrlParser: true });
@@ -46,7 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/calendar", require("./routes/eventRoutes"));
-app.use("/auth", logins);
+app.use("/auth", require("./routes/loginRoutes"));
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
