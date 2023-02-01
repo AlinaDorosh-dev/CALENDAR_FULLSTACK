@@ -1,0 +1,6 @@
+.cell {
+  min-width: 60px;
+  min-height: 40px;
+  border: 1px solid black;
+  text-align: right;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import CalendarGrid from "../components/CalendarGrid";
+import Calendar from "../components/calendar/Calendar";
 import apiRequest from "../utils/apiRequest";
 const CalendarPage = () => {
   const EVENTS_URL = "http://localhost:8001/calendar/events/";
@@ -20,7 +21,7 @@ const CalendarPage = () => {
 
   let eventTitle = "Title of new event 123";
 
-  const postEventOption = {
+  const postEventWithToken = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,17 +31,20 @@ const CalendarPage = () => {
       title: eventTitle,
     }),
   };
-
+  
   useEffect(() => {
     apiGetEvents();
   }, []);
 
   const addEvent = async () => {
-    const response = await apiRequest(EVENTS_URL, postEventOption);
-    const data = await response.json();
-    setEvents([...events, data.newEvent]);
+    try {
+      const response = await apiRequest(EVENTS_URL, postEventWithToken);
+      const data = await response.json();
+      setEvents([...events, data.newEvent]);
+    } catch (error) {
+      console.log("need to check refresh token")
+     }
   };
-
 
   return (
     <div>
@@ -48,13 +52,15 @@ const CalendarPage = () => {
       <h3>Here your events</h3>
       <ol>
         {events.map((item) => (
-          <li>{item.title}</li>
+          <li>Title: {item.title}, Date: {item.start.substring(0,10)}</li>
         ))}
       </ol>
 
       <button onClick={addEvent}>Add events</button>
 
       {/* <CalendarGrid events = {events}/> */}
+
+<Calendar/>
     </div>
   );
 };

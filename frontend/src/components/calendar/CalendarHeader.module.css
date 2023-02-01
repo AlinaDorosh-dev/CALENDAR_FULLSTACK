@@ -1,0 +1,29 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgb(80, 78, 78);
+    padding: 1rem;
+    border-radius: .3rem;
+    box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
+    color: antiquewhite;
+    font-weight: bold;
+    font-size: 1.3rem;
+    align-content: center;
+}
+
+.btn{
+    border-radius: .3rem;
+    border: 1px solid rgb(80, 78, 78);
+    box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
+    background-color: antiquewhite;
+}
+
+.btn button{
+    padding: .3rem;
+    background-color: antiquewhite;
+    color:rgb(80, 78, 78);
+    cursor: pointer;
+    border-radius: .3rem;
+}
+
+

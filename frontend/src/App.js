@@ -5,20 +5,21 @@ import MainPage from "./views/MainPage";
 import RegisterPage from "./views/RegisterPage";
 import ErrorPage from "./views/ErrorPage";
 import CalendarPage from "./views/CalendarPage";
+import Calendar from "./components/calendar/Calendar";
 function App() {
   
   return (
-    
-    <Router>
-    <Header/>
-    <Routes>
-      <Route index element={<Navigate replace to="/login" />} />
-      <Route path='/login' element={<MainPage />} />
-      <Route path='/signup' element={<RegisterPage/>} />
-      <Route path='/calendar' element={<CalendarPage/>} />
-      <Route path='/*' element={<ErrorPage />} />
-    </Routes>
-  </Router>
+    <Calendar/>
+  //   <Router>
+  //   <Header/>
+  //   <Routes>
+  //     <Route index element={<Navigate replace to="/login" />} />
+  //     <Route path='/login' element={<MainPage />} />
+  //     <Route path='/signup' element={<RegisterPage/>} />
+  //     <Route path='/calendar' element={<CalendarPage/>} />
+  //     <Route path='/*' element={<ErrorPage />} />
+  //   </Routes>
+  // </Router>
   );
 }
 

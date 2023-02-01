@@ -1,7 +1,7 @@
 import classes from "./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import  apiRequest  from "../utils/apiRequest";
+import apiRequest from "../utils/apiRequest";
 const LoginForm = () => {
   const emailRef = useRef();
   const errRef = useRef();
@@ -37,12 +37,12 @@ const LoginForm = () => {
     };
     const response = await apiRequest(LOGIN_URL, postOptions);
     const data = await response.json();
-    const { token } = data.data;
+    const { token, refreshToken } = data.data;
 
     // set token to localstorage item
     localStorage.setItem("token", token);
+    localStorage.setItem("refreshToken", refreshToken);
 
-    console.log("token", data.data.token);
     navigate("/calendar");
   };
 

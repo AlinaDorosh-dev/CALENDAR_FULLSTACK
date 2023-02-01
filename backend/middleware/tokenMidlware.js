@@ -5,7 +5,6 @@ const verifyToken = (req, res, next) => {
   if (!token) {
     return res.status(401).send("Access Denied");
   }
-
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = verified;
@@ -17,6 +16,7 @@ const verifyToken = (req, res, next) => {
       next();
     } catch (error) {
       res.status(400).send("Expired token");
+      console.log("token expired")
     }
   }
 };
@@ -24,11 +24,11 @@ const verifyToken = (req, res, next) => {
 const generateToken = (user, isRefreshToken) => {
   if (isRefreshToken) {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "1d",
     });
   } else {
     return jwt.sign(user, process.env.TOKEN_SECRET, {
-      expiresIn: "14d",
+      expiresIn: "2d",
     });
   }
 };

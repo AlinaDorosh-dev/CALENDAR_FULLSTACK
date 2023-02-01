@@ -84,6 +84,13 @@ const RegisterForm = () => {
   }, [email, pwd, matchPwd]);
   const navigate = useNavigate();
 
+  //state for existing email
+  const [emailExists, setEmailExists] = useState(false);
+
+  //state for successfull registration
+
+  const [success, setSuccess] = useState(false)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // If submition button hacked we can have additional check of regex validation
@@ -93,24 +100,38 @@ const RegisterForm = () => {
       setErrMsg("invalid Entry");
       return;
     }
-const postOption ={
-  method: "POST",
+    const postOption = {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: email,
         password: pwd,
-        name: userName
+        name: userName,
       }),
-}
-    await apiRequest(USERS_API, postOption);
-    setPwd("");
-    setEmail("");
-    setMatchPwd("");
+    };
+
+    try {
+      const response = await apiRequest(USERS_API, postOption);
+      if (response.ok) {
+        setUserName("");
+        setPwd("");
+        setEmail("");
+        setMatchPwd("");
+        setSuccess(true)
+      }
+      //If we try to register a user with an already registered email, we will show an alert with error
+      if (response.status === 409) {
+        setEmailExists(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     setTimeout(() => {
       navigate("/login");
-    }, 3000);
+    }, 3500);
   };
 
   return (
@@ -129,15 +150,27 @@ const postOption ={
 
         <h1>Register</h1>
 
-        <form onSubmit={handleSubmit}>
+        {emailExists && (
+          <p className={classes["alert-red"]}>
+            <FontAwesomeIcon icon={faInfoCircle} /> This email is already
+            registered, you will be redirected to login form
+          </p>
+        )}
 
-        <label htmlFor='userName'>
+        {success && <p className={classes["alert-green"]}>
+            <FontAwesomeIcon icon={faInfoCircle} /> User created successfully. You will be redirected to login form
+          </p>}
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='userName'>
             <h2>Name:</h2>
             <span className={validName ? classes.valid : classes.hide}>
               <FontAwesomeIcon icon={faCheck} />
             </span>
             <span
-              className={validName || !userName ? classes.hide : classes.invalid}
+              className={
+                validName || !userName ? classes.hide : classes.invalid
+              }
             >
               <FontAwesomeIcon icon={faTimes} />
             </span>
@@ -159,17 +192,14 @@ const postOption ={
           <p
             id='uidnote'
             className={
-              emailFocus && email && !validEmail
+              userNameFocus && userName && !validName
                 ? classes.instructions
                 : classes.offscreen
             }
           >
             <FontAwesomeIcon icon={faInfoCircle} />
-            Name hast to have at least 
+            Name hast to have at least 4 characters
           </p>
-
-
-
 
           <label htmlFor='email'>
             <h2>Email:</h2>
@@ -289,7 +319,11 @@ const postOption ={
 The button will stay disabled until all 3 validation passed */}
           <button
             className={classes["submit-btn"]}
-            disabled={!validEmail || !validPwd || !validMatch ? true : false}
+            disabled={
+              !validName || !validEmail || !validPwd || !validMatch
+                ? true
+                : false
+            }
           >
             Sign Up
           </button>
