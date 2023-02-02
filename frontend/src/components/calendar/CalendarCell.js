@@ -1,8 +1,8 @@
 import classes from './CalendarCell.module.css'
 
-const CalendarCell = ({children}) => {
+const CalendarCell = ({children, onClick}) => {
   return (
-    <div className={classes.cell}>
+    <div className={classes.cell} onClick ={onClick}>
         {children}
     </div>
   )

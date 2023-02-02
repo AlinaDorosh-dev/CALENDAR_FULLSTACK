@@ -4,7 +4,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useEffect } from "react";
 
 const CalendarHeader = ({
   month,
@@ -15,7 +15,17 @@ const CalendarHeader = ({
   years,
   setDaysNumber,
   setPrefixDays,
+  setSufixDays,
+  daysNumber,
 }) => {
+  useEffect(() => {
+    setPrefixDays(new Date(`${month} 1, ${year}`).getDay());
+    setSufixDays(6 - (new Date(`${month} ${daysNumber}, ${year}`).getDay()));
+    setDaysNumber(
+      new Date(Number(year), months.indexOf(month) + 1, 0).getDate()
+    );
+  }, [month, year,daysNumber]);
+
   const prevMonth = () => {
     if (months.indexOf(month) === 0) {
       setMonth(months[11]);
@@ -23,10 +33,6 @@ const CalendarHeader = ({
     } else {
       setMonth(months[months.indexOf(month) - 1]);
     }
-    setDaysNumber(new Date(Number(year), months.indexOf(month), 0).getDate());
-    //setPrefixDays(new Date(Number(year), months.indexOf(month)).getDay());
-    // console.log(new Date(`${month} 1, ${year}`).getDay())
-   
   };
 
   const nextMonth = () => {
@@ -36,8 +42,6 @@ const CalendarHeader = ({
     } else {
       setMonth(months[months.indexOf(month) + 1]);
     }
-    setDaysNumber(new Date(Number(year), months.indexOf(month), 0).getDate());
-    // setPrefixDays(new Date(Number(year), months.indexOf(month), 1).getDay()-1)
   };
 
   return (

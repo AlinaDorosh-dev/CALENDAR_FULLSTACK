@@ -21,20 +21,20 @@ const currentDate = new Date();
 const currentYear = new Date().getFullYear().toString();
 const currentMonth = months[currentDate.getMonth()];
 const numberOfDays = new Date(
-  currentDate.getFullYear(),
-  currentDate.getMonth() + 1,
+  Number(currentYear),
+  months.indexOf(currentMonth) + 1,
   0
 ).getDate();
 
-const startDay = new Date().getDay();
+const startDay = new Date(`${currentMonth} 1, ${currentYear}`).getDay();
+const endDay = new Date(`${currentMonth} ${numberOfDays}, ${currentYear}`).getDay();
 
 const Calendar = () => {
-  // console.log(startDay);
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
   const [daysNumber, setDaysNumber] = useState(numberOfDays);
   const [prefixDays, setPrefixDays] = useState(startDay);
-  const [sufixDays, setSufixDays] = useState();
+  const [sufixDays, setSufixDays] = useState(6 - endDay);
 
   return (
     <>
@@ -48,8 +48,16 @@ const Calendar = () => {
         setDaysNumber={setDaysNumber}
         prefixDays={prefixDays}
         setPrefixDays={setPrefixDays}
+        setSufixDays ={setSufixDays}
+        daysNumber={daysNumber}
       />
-      <CalendarGrid daysNumber={daysNumber} prefixDays={prefixDays}/>
+      <CalendarGrid
+        daysNumber={daysNumber}
+        prefixDays={prefixDays}
+        sufixDays={sufixDays}
+        month={month}
+        year={year}
+      />
     </>
   );
 };
