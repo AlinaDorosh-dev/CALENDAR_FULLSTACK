@@ -24,11 +24,11 @@ const verifyToken = (req, res, next) => {
 const generateToken = (user, isRefreshToken) => {
   if (isRefreshToken) {
     return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "5d",
     });
   } else {
     return jwt.sign(user, process.env.TOKEN_SECRET, {
-      expiresIn: "2d",
+      expiresIn: "10d",
     });
   }
 };

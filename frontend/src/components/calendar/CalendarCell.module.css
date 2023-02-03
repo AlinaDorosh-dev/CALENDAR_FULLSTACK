@@ -1,6 +1,26 @@
 .cell {
-  min-width: 60px;
-  min-height: 40px;
-  border: 1px solid black;
+  min-width: 40px;
+  min-height: 60px;
+  border: 1px solid rgba(54, 54, 54, 0.544);
   text-align: right;
+  color: antiquewhite;
+  font-weight: bold;
+  padding: .3rem;
+}
+.cell p{
+  padding: .2rem;
+  border-radius: .3rem;
+  background-color: rgba(43, 95, 226, 0.561);
+  text-align: center;
+  word-break:break-all;
+  font-size: .8rem;
+}
+
+.cell h4{
+  text-align: center;
+}
+
+
+.today{
+ background-color:rgba(237, 151, 98, 0.661) ;
 }

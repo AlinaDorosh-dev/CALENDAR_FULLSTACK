@@ -1,11 +1,14 @@
-import classes from './CalendarCell.module.css'
+import classes from "./CalendarCell.module.css";
 
-const CalendarCell = ({children, onClick}) => {
+const CalendarCell = ({ children, onClick, isToday }) => {
   return (
-    <div className={classes.cell} onClick ={onClick}>
-        {children}
+    <div
+      className={isToday ? `${classes.today} ${classes.cell}` : classes.cell}
+      onClick={onClick}
+    >
+      {children}
     </div>
-  )
-}
+  );
+};
 
-export default CalendarCell
+export default CalendarCell;

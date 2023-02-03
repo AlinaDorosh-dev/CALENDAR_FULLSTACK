@@ -19,28 +19,6 @@ const CalendarProvider = ({ children }) => {
     setEvents(data.events);
   };
 
-  let eventTitle = "Title of new event 123";
-
-  const postEventWithToken = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("token"),
-    },
-    body: JSON.stringify({
-      title: eventTitle,
-    }),
-  };
-  const addEvent = async () => {
-    try {
-      const response = await apiRequest(EVENTS_URL, postEventWithToken);
-      const data = await response.json();
-      setEvents([...events, data.newEvent]);
-    } catch (error) {
-      console.log("need to check refresh token")
-     }
-  };
-
   useEffect(() => {
     apiGetEvents();
   }, []);
@@ -49,10 +27,8 @@ const CalendarProvider = ({ children }) => {
     <CalendarContext.Provider
       value={{
         EVENTS_URL,
-        postEventWithToken,
         events,
         setEvents,
-        addEvent
       }}
     >
       {children}

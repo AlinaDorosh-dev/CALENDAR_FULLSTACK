@@ -54,18 +54,112 @@
   position: relative;
   border-radius: 0.5rem;
   margin: 0 auto;
-  background-color: antiquewhite;
+  background: #ffefba; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffefba
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #ffefba
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  padding: 2rem;
+}
+
+.md-content input {
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  margin: 1rem auto;
+  display: block;
+  color: rgb(41, 39, 39);
+}
+
+.event-date {
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  display: block;
+  color: rgb(41, 39, 39);
+  background-color: #ffffff;
+}
+
+.md-content input:focus {
+  border: 3px solid transparent;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  z-index: 2;
 }
 
 .md-content button {
-  display: block;
-  margin: 0 auto;
+  margin: 1rem auto;
   padding: 0.6em 1.2em;
-  font-family: "Lato", sans-serif;
-  font-size: 1em;
+  font-size: 0.9rem;
   letter-spacing: 1px;
-  color: #fff;
   text-transform: uppercase;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 0.3rem;
+  display: block;
+}
+
+.md-content button:hover {
+  color: #e79135;
+}
+
+.md-content h3 {
+  margin-left: 1rem;
+}
+
+.md-content select {
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  margin: 1rem auto;
+  display: block;
+  background-color: #ffffff;
+  color: rgb(41, 39, 39);
+}
+
+.md-content svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.md-content svg:hover {
+  color: #564c4c;
+}
+
+.buttons {
+  display: flex;
+}
+
+.cancel {
+  background: #304352; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #d7d2cc,
+    #304352
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #d7d2cc,
+    #304352
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #ffffff;
+  width: 40%;
+}
+
+.save {
+  background: linear-gradient(to right top, #a82828, #e79135);
+  color: antiquewhite;
+  width: 40%;
 }

@@ -20,10 +20,11 @@ const setEvent = asyncHandler(async (req, res) => {
   }
   const newEvent = await Event.create({
     title: req.body.title,
-    start: new Date(),
-    end: new Date(),
+    start: req.body.start,
+    end: req.body.end,
     allDay: req.body.allday,
     user: req.user.id,
+    theme:req.body.theme
   });
 
   res.status(200).json({ status: "succeeded", newEvent, error: null });

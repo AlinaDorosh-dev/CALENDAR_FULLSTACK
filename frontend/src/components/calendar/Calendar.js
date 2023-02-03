@@ -1,6 +1,8 @@
 import CalendarHeader from "./CalendarHeader";
 import CalendarGrid from "./CalendarGrid";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CalendarContext } from "./calendarProvider/calendarProvider";
+import  classes from "./Calendar.module.css"
 const months = [
   "January",
   "February",
@@ -36,8 +38,9 @@ const Calendar = () => {
   const [prefixDays, setPrefixDays] = useState(startDay);
   const [sufixDays, setSufixDays] = useState(6 - endDay);
 
+
   return (
-    <>
+    <div className= {classes["calendar-container"]}>
       <CalendarHeader
         month={month}
         setMonth={setMonth}
@@ -58,7 +61,7 @@ const Calendar = () => {
         month={month}
         year={year}
       />
-    </>
+    </div>
   );
 };
 
