@@ -42,7 +42,8 @@
 }
 
 .login-form h2 {
-  margin-left: 1.3rem;
+  margin-left: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .sign-up{
@@ -59,4 +60,24 @@
 
 .sign-up a:hover{
   color: #d98324;
+}
+
+.errMsg{
+  background-color: rgb(207, 60, 60);
+  border-radius: 0.3rem;
+  color: #fff;
+  padding: 0.25rem;
+  width: 90%;
+  margin: 1rem auto;
+  display: block;
+}
+
+.success {
+  background-color: rgb(120, 223, 120);
+  border-radius: 0.3rem;
+  color: rgb(41, 39, 39);
+  padding: 0.25rem;
+  width: 90%;
+  margin: 1rem auto;
+  display: block;
 }

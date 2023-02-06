@@ -1,0 +1,30 @@
+.event {
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  text-align: center;
+  word-break: break-all;
+  font-size: 0.7rem;
+}
+
+.event:hover {
+  color: #e79135;
+}
+
+.purple {
+  background-color:rgba(189, 44, 189, 0.567)
+}
+.red {
+  background-color: rgba(232, 33, 33, 0.786);
+}
+.blue {
+  background-color: rgba(5, 54, 249, 0.515);
+}
+
+.green {
+  background-color: rgba(9, 116, 9, 0.592);
+}
+
+.yellow {
+  background-color: rgb(212, 212, 7);
+}

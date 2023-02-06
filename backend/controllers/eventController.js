@@ -1,11 +1,8 @@
 const express = require("express");
-const { verifyToken } = require("../middleware/tokenMidlware");
 const router = express.Router();
 const asyncHandler = require("express-async-handler");
 //importamos modelo con schema correspondiente
 const Event = require("../models/eventModel");
-
-
 
 const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({ user: req.user.id });
@@ -18,13 +15,14 @@ const setEvent = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please add a text to your event");
   }
+  const { title, start, end, allDay, theme } = req.body;
   const newEvent = await Event.create({
-    title: req.body.title,
-    start: req.body.start,
-    end: req.body.end,
-    allDay: req.body.allday,
+    title,
+    start,
+    end,
+    allDay,
     user: req.user.id,
-    theme:req.body.theme
+    theme,
   });
 
   res.status(200).json({ status: "succeeded", newEvent, error: null });
@@ -55,6 +53,7 @@ const updateEvent = asyncHandler(async (req, res) => {
 
   res.status(200).json({ status: "succeeded", updatedEvent, error: null });
 });
+
 const deleteEvent = asyncHandler(async (req, res) => {
   const event = await Event.findById(req.params.id);
 

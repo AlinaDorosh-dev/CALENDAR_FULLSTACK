@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import apiRequest from "../utils/apiRequest";
 const LoginForm = () => {
   const emailRef = useRef();
-  const errRef = useRef();
+
   const navigate = useNavigate();
+  
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -22,33 +23,45 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess(true);
-    setPwd("");
-    setEmail("");
-    const postOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: pwd,
-      }),
-    };
-    const response = await apiRequest(LOGIN_URL, postOptions);
-    const data = await response.json();
-    const { token, refreshToken } = data.data;
+    try {
+      setPwd("");
+      setEmail("");
+      const postOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: pwd,
+        }),
+      };
+      const response = await apiRequest(LOGIN_URL, postOptions);
+      const data = await response.json();
+      if (data.error === "Wrong email or password") {
+        setErrMsg(data.error);
+        setSuccess(false);
+      }
+      console.log(data.error);
+      const { token, refreshToken } = data.data;
 
-    // set token to localstorage item
-    localStorage.setItem("token", token);
-    localStorage.setItem("refreshToken", refreshToken);
-
-    navigate("/calendar");
+      // set token to localstorage item
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+      setSuccess(true);
+      setTimeout(() => {
+        navigate("/calendar");
+      }, 1500);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <div className={classes["login-form"]}>
       <h1> Sign In</h1>
+      {errMsg && <p className={classes.errMsg}>{errMsg}</p>}
+      {success && <p className={classes.success}>Signed in successfully</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor='email'>
           <h2>Email:</h2>

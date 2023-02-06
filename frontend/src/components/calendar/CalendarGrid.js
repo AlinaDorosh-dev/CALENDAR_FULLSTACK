@@ -1,14 +1,22 @@
 import classes from "./CalendarGrid.module.css";
 import CalendarCell from "./CalendarCell";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { CalendarContext } from "./calendarProvider/calendarProvider";
 import ReactDOM from "react-dom";
 import ModalForm from "./Modal/ModalForm";
+import CalendarEvent from "./CalendarEvent";
+
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
-  const [visible, setVisible] = useState(false);
-  const [date, setDate] = useState(new Date().toDateString());
+  const {
+    events,
+    visible,
+    setVisible,
+    setDate,
+    setModify,
+    setModifyingEvent,
+  } = useContext(CalendarContext);
 
   const handleClickDate = (date) => {
     const clickedDate = new Date(`${month} ${date}, ${year} 09:00 UTC`);
@@ -16,18 +24,17 @@ const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
     setDate(clickedDate.toDateString());
   };
 
-  const { events } = useContext(CalendarContext);
-  console.log(events);
+  const clickEvent = (e, event) => {
+    e.stopPropagation();
+    console.log("event clicked", event);
+    setModifyingEvent(event);
+    setModify(true);
+    setVisible(!visible);
+  };
   return (
     <>
       {ReactDOM.createPortal(
-        <ModalForm
-          visible={visible}
-          setVisible={setVisible}
-          date={date}
-          month={month}
-          year={year}
-        />,
+        <ModalForm month={month} year={year} />,
         document.querySelector("#modal")
       )}
 
@@ -36,9 +43,9 @@ const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
           {/* Map days names */}
 
           {weekdays.map((day) => (
-            <CalendarCell key={day}>
-             <h4>{day}</h4> 
-              </CalendarCell>
+            <CalendarCell key={day} className={classes.weekdays}>
+              <h4>{day}</h4>
+            </CalendarCell>
           ))}
 
           {/* map empty cellls if month does not start on sunday */}
@@ -60,24 +67,30 @@ const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
 
             const isToday = calendarDay === currentDate;
 
-            const hasEvent = events.find(
-              (event) => event.start === calendarDay
+            const thisDayEvents = events.filter(
+              (event) => event.start.substr(0, 10) === calendarDay.substr(0, 10)
             );
-            if (hasEvent) {
-              console.log(hasEvent.title);
-            }
 
             return (
               <CalendarCell
                 key={mapedDay}
                 isToday={isToday}
                 onClick={() => handleClickDate(mapedDay)}
-                calendarDay={calendarDay}
-                events={events}
-                mapedDay={mapedDay}
               >
                 {mapedDay}
-                {hasEvent && <p>{hasEvent.title}</p>}
+                {thisDayEvents.length > 0 &&
+                  thisDayEvents.map((event) => (
+                    <CalendarEvent
+                      key={event._id}
+                      clickEvent={(e) => clickEvent(e, event)}
+                      color={event.theme}
+                    >
+                      {/* if title lenth is larger then 20, show only first part of title */}
+                      {event.title.substr(0, 20)}
+
+                      {event.title.length > 20 && <>...</>}
+                    </CalendarEvent>
+                  ))}
               </CalendarCell>
             );
           })}

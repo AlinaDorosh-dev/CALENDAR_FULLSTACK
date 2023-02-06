@@ -40,12 +40,12 @@
 }
 
 .md-effect-1 .md-content {
-  transform: scale(0) rotate(720deg);
+  transform: scale(0);
   opacity: 0;
   transition: all 0.5s;
 }
 .md-show.md-effect-1 .md-content {
-  transform: scale(1) rotate(0deg);
+  transform: scale(1);
   opacity: 1;
 }
 
@@ -89,6 +89,12 @@
   background-color: #ffffff;
 }
 
+.event-date:focus {
+  border: 3px solid transparent;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  z-index: 2;
+}
 .md-content input:focus {
   border: 3px solid transparent;
   border-radius: 0.3rem;
@@ -105,6 +111,7 @@
   cursor: pointer;
   border-radius: 0.3rem;
   display: block;
+  width: 40%;
 }
 
 .md-content button:hover {
@@ -155,11 +162,19 @@
     #304352
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #ffffff;
-  width: 40%;
 }
 
 .save {
   background: linear-gradient(to right top, #a82828, #e79135);
   color: antiquewhite;
-  width: 40%;
+}
+
+.delete {
+  background-color: #a82828;
+  color: antiquewhite;
+}
+
+.modify {
+  background-color: rgba(9, 116, 9, 0.592);
+  color: #304352;
 }

@@ -28,7 +28,7 @@ const RegisterForm = () => {
   //For managing focus, text selection, or media playback.
   //Pesist between renders and doesn´t make component rerender when it is changed
   //Returns object with single property CURRENT
-  const emailRef = useRef(); //Set focus in user input when component loads
+  const nameRef = useRef(); //Set focus in user input when component loads
   const errRef = useRef(); //Set focus if we get error, so screenreader can read it
 
   //States for name
@@ -57,7 +57,7 @@ const RegisterForm = () => {
   //Put focus in email field
   //Dependency array is empty, so it only happens, when the component loads
   useEffect(() => {
-    emailRef.current.focus();
+    nameRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -187,6 +187,7 @@ const RegisterForm = () => {
             onFocus={() => setUserNameFocus(true)}
             onBlur={() => setUserNameFocus(false)}
             value={userName}
+            ref={nameRef}
           />
           {/* This paragraph will be displayed only when input onFocus, at least 1 char is typed and if validation fails */}
           <p
@@ -215,7 +216,7 @@ const RegisterForm = () => {
           <input
             type='text'
             id='email'
-            ref={emailRef}
+            
             autoComplete='off'
             onChange={(e) => setEmail(e.target.value)}
             required
