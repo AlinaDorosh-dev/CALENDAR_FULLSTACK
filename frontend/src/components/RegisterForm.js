@@ -375,7 +375,7 @@ const RegisterForm = () => {
             Already registered?
             <br />
             <span className='line'>
-              <Link to='/login'>Sign In</Link>
+              <Link to='/login'>SIGN IN</Link>
             </span>
           </p>
         </form>

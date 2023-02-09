@@ -97,8 +97,7 @@ const ModifyForm = ({}) => {
       <h3>Event date</h3>
 
       <input
-        type='text'
-        defaultValue={modifyDate}
+        type='date'
         name='start'
         onChange={(e) =>
           setUpdateEvent({
@@ -107,7 +106,9 @@ const ModifyForm = ({}) => {
             end: new Date(`${e.target.value} 10:00 UTC`).toISOString(),
           })
         }
-      />
+       />
+<input type="time" name="" id="" />
+
       <select
         name='theme'
         id='theme'

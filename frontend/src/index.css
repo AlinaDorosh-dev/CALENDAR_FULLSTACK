@@ -19,8 +19,7 @@ font-family: 'Sora', sans-serif; */
 body {
   font-family: "Sora", sans-serif;
   color: rgb(41, 39, 39);
-  background:linear-gradient(to right top, #09c6f9,
-  #63A4FF) ;
+  background: #F8F4EA;
   min-height: 100vh;
   padding: 1.5rem;
 }
@@ -32,7 +31,7 @@ h4,
 h5,
 h6 {
   font-family: "Alegreya", sans-serif;
-  color: rgb(41, 39, 39);
+  color: #243763
 }
 
 h1{

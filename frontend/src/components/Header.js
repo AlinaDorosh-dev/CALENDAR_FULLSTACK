@@ -3,7 +3,7 @@ import React from 'react'
 const Header = () => {
   return (
     <header>
-        <h1 style={{textAlign:"center"}}>My calendar</h1>
+        <h1 style={{textAlign:"center", letterSpacing:"7px"}}>MY CALENDAR</h1>
     </header>
   )
 }

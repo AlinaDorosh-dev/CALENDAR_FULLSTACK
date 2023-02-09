@@ -54,68 +54,54 @@
   position: relative;
   border-radius: 0.5rem;
   margin: 0 auto;
-  background: #ffefba; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #ffffff,
-    #ffefba
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #ffffff,
-    #ffefba
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background-color: #579BB1; 
   padding: 2rem;
 }
-
-.md-content input {
-  padding: 0.5rem;
+.md-content h2{
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.md-content h3{
+  font-size: 1.1rem;
+}
+.md-content input, input[type=time] {
+  padding: 0.3rem 0.5rem;
   width: 90%;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   transition: all 0.15s ease-in-out;
-  margin: 1rem auto;
+  margin: .1rem auto 1rem;
   display: block;
-  color: rgb(41, 39, 39);
+  color: #243763;
+  font-size: .9rem;
 }
 
 .event-date {
-  padding: 0.5rem;
+  padding: 0.3rem 0.5rem;
   width: 90%;
-  border-radius: 0.5rem;
-  margin: 1rem auto;
+  border-radius: 0.3rem;
+  margin: .1rem auto 1rem;
   display: block;
-  color: rgb(41, 39, 39);
+  color: #243763;
   background-color: #ffffff;
+  font-size: .9rem;
 }
 
-.event-date:focus {
-  border: 3px solid transparent;
-  border-radius: 0.3rem;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  z-index: 2;
-}
 .md-content input:focus {
-  border: 3px solid transparent;
-  border-radius: 0.3rem;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 0.2rem rgba(9, 77, 180, 0.486);
   z-index: 2;
 }
+
 
 .md-content button {
   margin: 1rem auto;
-  padding: 0.6em 1.2em;
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  cursor: pointer;
   border-radius: 0.3rem;
   display: block;
   width: 40%;
-}
-
-.md-content button:hover {
-  color: #e79135;
 }
 
 .md-content h3 {
@@ -123,21 +109,22 @@
 }
 
 .md-content select {
-  padding: 0.5rem;
+  padding: .3rem .5rem ;
   width: 90%;
-  border-radius: 0.5rem;
-  transition: all 0.15s ease-in-out;
-  margin: 1rem auto;
+  border-radius: 0.2rem;
+  margin: .1rem auto 1rem;
   display: block;
+  color: #243763;
   background-color: #ffffff;
-  color: rgb(41, 39, 39);
+  font-size: .9rem;
+  border-right: 10px solid transparent;
 }
 
 .md-content svg {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 2rem;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 
@@ -162,19 +149,49 @@
     #304352
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #ffffff;
+  cursor: pointer;
 }
 
 .save {
   background: linear-gradient(to right top, #a82828, #e79135);
   color: antiquewhite;
+  cursor: pointer;
+}
+
+.save:hover, .cancel:hover, .delete:hover{
+  color: #e79135;
 }
 
 .delete {
   background-color: #a82828;
   color: antiquewhite;
+  cursor: pointer;
 }
 
 .modify {
   background-color: rgba(9, 116, 9, 0.592);
-  color: #304352;
+  color: antiquewhite;
+  cursor: pointer;
+}
+
+.modify:hover{
+  color: #f4c095;
+}
+
+.purple {
+  background-color:rgba(189, 44, 189, 0.567)
+}
+.red {
+  background-color: rgba(232, 33, 33, 0.786);
+}
+.blue {
+  background-color: rgba(5, 54, 249, 0.664);
+}
+
+.green {
+  background-color: rgba(9, 116, 9, 0.592);
+}
+
+.yellow {
+  background-color: rgba(224, 193, 13, 0.884);
 }

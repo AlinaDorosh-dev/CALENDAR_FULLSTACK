@@ -1,20 +1,16 @@
 .cell {
   min-width: 40px;
   min-height: 80px;
+  max-height: 80px;
   border: 1px solid rgba(53, 51, 51, 0.185);
   text-align: right;
-  color: antiquewhite;
+  /* color: antiquewhite; */
   font-weight: bold;
   padding: .3rem;
+  overflow-y: hidden;
+  color: #243763;
 }
-
-.cell h4{
-  text-align: center;
-  margin-top: 4rem;
-  font-size: 1.6rem;
-}
-
 
 .today{
- background-color:rgba(99, 130, 223, 0.603) ;
+ background-color:#f4c095 ;
 }

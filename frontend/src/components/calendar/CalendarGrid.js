@@ -48,9 +48,9 @@ const CalendarGrid = () => {
           {/* Map days names */}
 
           {weekdays.map((day) => (
-            <CalendarCell key={day} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <div key={day}  style={{backgroundColor:"#1d7874", color: "antiquewhite"}}>
               <h4>{day}</h4>
-            </CalendarCell>
+            </div>
           ))}
 
           {/* map empty cellls if month does not start on sunday */}
@@ -91,7 +91,8 @@ const CalendarGrid = () => {
                       color={event.theme}
                     >
                       {/* if title lenth is larger then 20, show only first part of title */}
-                      {event.title.substr(0, 20)}
+                      {event.start.substr(11,5)} {event.title.substr(0, 20)}
+
 
                       {event.title.length > 20 && <>...</>}
                     </CalendarEvent>

@@ -19,14 +19,17 @@ const AddForm = ({ month, year }) => {
       end: endEvent,
     });
   }, [date]);
+  const [startTime, setStartTime] = useState("09:00");
 
   const startEvent = new Date(
-    `${month}-${new Date(date).getDate()}-${year} 09:00 UTC`
+    `${month}-${new Date(date).getDate()}-${year} ${startTime} UTC`
   ).toISOString();
 
   const endEvent = new Date(
-    `${month}-${new Date(date).getDate()}-${year} 10:00 UTC`
+    `${month}-${new Date(date).getDate()}-${year} 21:00 UTC`
   ).toISOString();
+
+  
   const [newEvent, setNewEvent] = useState({
     title: "",
     start: startEvent,
@@ -45,7 +48,6 @@ const AddForm = ({ month, year }) => {
 
   const submitNewEvent = async (e) => {
     e.preventDefault();
-    console.log(newEvent);
     try {
       const response = await apiRequest(EVENTS_URL, postEventWithToken);
       const data = await response.json();
@@ -74,10 +76,7 @@ const AddForm = ({ month, year }) => {
   };
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <h2>
-        <>Add </>
-        event details
-      </h2>
+      <h2>Add event details</h2>
       <label htmlFor='eventTitle'>
         <h3>Event title:</h3>
       </label>
@@ -104,7 +103,8 @@ const AddForm = ({ month, year }) => {
         id='startTime'
         min='07:00'
         max='21:00'
-        defaultValue={new Date().getTime()}
+        value={startTime}
+        onChange={(e) => setStartTime(e.target.value)}
       />
 
       <select
@@ -113,11 +113,21 @@ const AddForm = ({ month, year }) => {
         onChange={handleInputChange}
         value={newEvent.theme}
       >
-        <option value='blue'>Blue Theme</option>
-        <option value='red'>Red Theme</option>
-        <option value='yellow'>Yellow Theme</option>
-        <option value='green'>Green Theme</option>
-        <option value='purple'>Purple Theme</option>
+        <option value='blue' className={classes.blue}>
+          Blue Theme
+        </option>
+        <option value='red' className={classes.red}>
+          Red Theme
+        </option>
+        <option value='yellow' className={classes.yellow}>
+          Yellow Theme
+        </option>
+        <option value='green' className={classes.green}>
+          Green Theme
+        </option>
+        <option value='purple' className={classes.purple}>
+          Purple Theme
+        </option>
       </select>
 
       <div className={classes.buttons}>
@@ -125,9 +135,11 @@ const AddForm = ({ month, year }) => {
           Cancel
         </button>
         <button
-          className={classes.save}
+          className={
+            newEvent.title && startTime ? classes.save : classes.disabled
+          }
           onClick={submitNewEvent}
-          disabled={!newEvent.title ? true : false}
+          disabled={!newEvent.title || !startTime ? true : false}
         >
           Save event
         </button>

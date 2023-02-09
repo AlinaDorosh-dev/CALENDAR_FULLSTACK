@@ -1,27 +1,30 @@
 .register-form {
   margin: 1rem auto;
   width: 80vw;
-  border: 1px solid rgb(80, 78, 78);
-  max-width: 600px;
+  border: 1px solid rgba(184, 181, 181, 0.61);
+  max-width: 500px;
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
+  background-color: #579BB1;
 }
-
+.register-form h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
 .register-form input {
   padding: 0.5rem;
   width: 90%;
   border-radius: 0.5rem;
   background-color: antiquewhite;
   transition: all 0.15s ease-in-out;
-  margin: 1rem auto;
+  margin: 0.3rem auto 1rem;
   display: block;
 }
 
 .register-form input:focus {
-  border: 3px solid transparent;
-  border-radius: 0.3rem;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 0.2rem rgba(9, 77, 180, 0.486);
   z-index: 2;
 }
 
@@ -33,7 +36,7 @@
   border-radius: 0.5rem;
   transition: all 0.15s ease-in-out;
   color: white;
-  background-color: rgb(41, 39, 39);
+  background-color: #243763
 }
 
 .register-form .submit-btn:hover {
@@ -42,9 +45,9 @@
 }
 
 .register-form h2 {
-  margin-left: 1.3rem;
+  margin-left: 1.5rem;
   display: inline;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .instructions {
@@ -111,11 +114,12 @@
   color: rgb(41, 39, 39);
   line-height: 2rem;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .sign-in a {
   color: antiquewhite;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 .sign-in a:hover {

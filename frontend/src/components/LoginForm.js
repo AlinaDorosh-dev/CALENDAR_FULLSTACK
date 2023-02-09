@@ -6,7 +6,7 @@ const LoginForm = () => {
   const emailRef = useRef();
 
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -37,12 +37,17 @@ const LoginForm = () => {
         }),
       };
       const response = await apiRequest(LOGIN_URL, postOptions);
+      if (response === "Failed to fetch") {
+        setErrMsg("Conection error. Please reload the app");
+        setSuccess(false);
+      }
+
       const data = await response.json();
       if (data.error === "Wrong email or password") {
         setErrMsg(data.error);
         setSuccess(false);
       }
-      console.log(data.error);
+
       const { token, refreshToken } = data.data;
 
       // set token to localstorage item

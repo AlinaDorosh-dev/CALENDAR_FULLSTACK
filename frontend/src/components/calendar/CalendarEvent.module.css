@@ -5,6 +5,8 @@
   text-align: center;
   word-break: break-all;
   font-size: 0.7rem;
+  margin: 2px auto;
+  color: antiquewhite;
 }
 
 .event:hover {
@@ -18,7 +20,7 @@
   background-color: rgba(232, 33, 33, 0.786);
 }
 .blue {
-  background-color: rgba(5, 54, 249, 0.515);
+  background-color: rgba(5, 54, 249, 0.664);
 }
 
 .green {
@@ -26,5 +28,5 @@
 }
 
 .yellow {
-  background-color: rgb(212, 212, 7);
+  background-color: rgba(224, 193, 13, 0.884);
 }

@@ -2,11 +2,13 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  
+  background-color: #243763;
   color: antiquewhite;
   font-weight: bold;
   font-size: 1.3rem;
   align-content: center;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
 }
 
 .btn {
@@ -17,9 +19,10 @@
 }
 
 .btn button {
-  padding: 0.3rem;
+  padding: 0.3rem 1rem;
   background-color: antiquewhite;
   color: rgb(80, 78, 78);
   cursor: pointer;
   border-radius: 0.3rem;
+  
 }

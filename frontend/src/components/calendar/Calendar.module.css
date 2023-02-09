@@ -1,7 +1,12 @@
 .calendar-container {
-  box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 15px 18px 18px 5px rgba(0, 0, 0, 0.1);
   border-radius: 0.3rem;
-  border: 2px solid rgba(211, 206, 206, 0.499);
   min-width: 90%;
+  max-width: 1000px;
   margin: 0 auto;
+  /* background-color:  #f4c095c2; */
+}
+
+.calendar-container h4{
+  color: antiquewhite;
 }
