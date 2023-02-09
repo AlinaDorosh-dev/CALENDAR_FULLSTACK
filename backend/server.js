@@ -11,16 +11,16 @@ const mongoString = process.env.DATABASE_URL;
 
 //Conectar db
 mongoose.connect(mongoString, { useNewUrlParser: true });
+
 //Guardar la conexion
 const db = mongoose.connection;
-console.log();
+
 //Verificar si la conexion exitosa
 db.on("error", (err) => {
   console.log(err.message);
 });
 
 //Ejecuta una vez, cuando se conecta a la db
-
 db.once("connected", () => {
   console.log("Succesfully connected");
 });
@@ -32,12 +32,11 @@ db.on("disconnected", () => {
 const PORT = 8001;
 const app = express();
 app.use(cors());
-//Analizar archivos json
 
+//Analizar archivos json
 app.use(express.json());
 
 //Analizar urlencoded
-
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/calendar", require("./routes/eventRoutes"));

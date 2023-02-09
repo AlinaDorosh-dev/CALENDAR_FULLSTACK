@@ -7,15 +7,11 @@ const AddForm = ({ month, year }) => {
     useContext(CalendarContext);
 
   const titleRef = useRef(null);
-  console.log("hello");
-  useEffect(() => {
-    console.log("hi");
-    if (titleRef.current) {
-      titleRef.current.focus();
-    }
-  }, [visible]);
-  console.log("buy");
-  
+
+  // if (visible) {
+  //   titleRef.current.focus();
+  // }
+
   useEffect(() => {
     setNewEvent({
       ...newEvent,
@@ -83,7 +79,7 @@ const AddForm = ({ month, year }) => {
         event details
       </h2>
       <label htmlFor='eventTitle'>
-        <h3>Event title</h3>
+        <h3>Event title:</h3>
       </label>
       <input
         type='text'
@@ -96,8 +92,20 @@ const AddForm = ({ month, year }) => {
         ref={titleRef}
       />
 
-      <h3>Event date</h3>
+      <h3>Event date:</h3>
       <div className={classes["event-date"]}>{date}</div>
+      <label htmlFor='startTime'>
+        <h3>Event time:</h3>
+      </label>
+
+      <input
+        type='time'
+        name='startTime'
+        id='startTime'
+        min='07:00'
+        max='21:00'
+        defaultValue={new Date().getTime()}
+      />
 
       <select
         name='theme'

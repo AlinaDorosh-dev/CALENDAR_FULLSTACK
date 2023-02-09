@@ -13,12 +13,12 @@ import apiRequest from "../utils/apiRequest";
 
 //Starts with lower or uppercase letter, followed by l/u case letter, number, hyphon(-) or underscore(_) // {from 4 to 24 char}
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-//Regex for validate Email
 
+//Regex for validate Email
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-//Regex for validate password
 
+//Regex for validate password
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const USERS_API = "http://localhost:8001/auth/signup";
@@ -88,7 +88,6 @@ const RegisterForm = () => {
   const [emailExists, setEmailExists] = useState(false);
 
   //state for successfull registration
-
   const [success, setSuccess] = useState(false)
 
   const handleSubmit = async (e) => {
@@ -96,10 +95,12 @@ const RegisterForm = () => {
     // If submition button hacked we can have additional check of regex validation
     const v1 = EMAIL_REGEX.test(email); //boolean
     const v2 = PWD_REGEX.test(pwd); //boolean
+
     if (!v1 || !v2) {
       setErrMsg("invalid Entry");
       return;
     }
+
     const postOption = {
       method: "POST",
       headers: {
@@ -125,13 +126,13 @@ const RegisterForm = () => {
       if (response.status === 409) {
         setEmailExists(true);
       }
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2500);
     } catch (error) {
       console.log(error);
     }
-
-    setTimeout(() => {
-      navigate("/login");
-    }, 3500);
   };
 
   return (
@@ -140,6 +141,8 @@ const RegisterForm = () => {
         {/* Parragraph for display error message.
         If no error we aply class offscreen,which removes it from visible area of screen,
         but it is still awailable for screenreaders(display none is not recomended) */}
+
+        {/* TODO */}
         <p
           ref={errRef}
           className={errMsg ? classes["errmsg"] : classes["offscreen"]}
@@ -216,7 +219,6 @@ const RegisterForm = () => {
           <input
             type='text'
             id='email'
-            
             autoComplete='off'
             onChange={(e) => setEmail(e.target.value)}
             required

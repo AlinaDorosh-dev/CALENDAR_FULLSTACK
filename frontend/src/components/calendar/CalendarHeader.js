@@ -4,27 +4,31 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { CalendarContext } from "./calendarProvider/calendarProvider";
 
-const CalendarHeader = ({
-  month,
-  setMonth,
-  year,
-  setYear,
-  months,
-  years,
-  setDaysNumber,
-  setPrefixDays,
-  setSufixDays,
-  daysNumber,
-}) => {
+const CalendarHeader = () => {
+
+  const {
+    month,
+    setMonth,
+    year,
+    setYear,
+    months,
+    years,
+    setDaysNumber,
+    setPrefixDays,
+    setSufixDays,
+    daysNumber
+  } = useContext(CalendarContext);
+
   useEffect(() => {
     setPrefixDays(new Date(`${month} 1, ${year}`).getDay());
-    setSufixDays(6 - (new Date(`${month} ${daysNumber}, ${year}`).getDay()));
+    setSufixDays(6 - new Date(`${month} ${daysNumber}, ${year}`).getDay());
     setDaysNumber(
       new Date(Number(year), months.indexOf(month) + 1, 0).getDate()
     );
-  }, [month, year,daysNumber]);
+  }, [month, year, daysNumber]);
 
   const prevMonth = () => {
     if (months.indexOf(month) === 0) {

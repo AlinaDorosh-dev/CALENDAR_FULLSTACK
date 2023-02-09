@@ -8,7 +8,7 @@ import CalendarEvent from "./CalendarEvent";
 
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
+const CalendarGrid = () => {
   const {
     events,
     visible,
@@ -16,6 +16,11 @@ const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
     setDate,
     setModify,
     setModifyingEvent,
+    daysNumber,
+    prefixDays,
+    sufixDays,
+    month,
+    year,
   } = useContext(CalendarContext);
 
   const handleClickDate = (date) => {
@@ -43,7 +48,7 @@ const CalendarGrid = ({ daysNumber, prefixDays, sufixDays, month, year }) => {
           {/* Map days names */}
 
           {weekdays.map((day) => (
-            <CalendarCell key={day} className={classes.weekdays}>
+            <CalendarCell key={day} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
               <h4>{day}</h4>
             </CalendarCell>
           ))}
