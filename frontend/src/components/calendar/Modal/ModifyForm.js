@@ -1,7 +1,15 @@
 import classes from "./ModalForm.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CalendarContext } from "../calendarProvider/calendarProvider";
 import apiRequest from "../../../utils/apiRequest";
+
+//IsoString returns one hour less. Getting rid of this difference and formatting the date
+let formatDate = (date, time) => {
+  let x = new Date(`${date} ${time}`).getTimezoneOffset() * 60000;
+  let dateIsoString = new Date(new Date(`${date} ${time}`) - x).toISOString();
+  return dateIsoString;
+};
+
 const ModifyForm = ({}) => {
   const {
     EVENTS_URL,
@@ -13,19 +21,24 @@ const ModifyForm = ({}) => {
     setModify,
     visible,
   } = useContext(CalendarContext);
-  
-  const modifyDate = new Date(modifyingEvent.start).toDateString();
-  const [updateEvent, setUpdateEvent] = useState(modifyingEvent);
 
-  const handleInputChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  const [updateEvent, setUpdateEvent] = useState(modifyingEvent);
+  //state for set default value in date-picker
+  const [modifyDate, setModifyDate] = useState(
+    new Date(modifyingEvent.start).toJSON().slice(0, 10)
+  );
+  //state for set default value in time-picker
+  const [modifyTime, setModifyTime] = useState(
+    new Date(modifyingEvent.start).toISOString().substr(11, 5)
+  );
+
+  useEffect(() => {
     setUpdateEvent({
       ...updateEvent,
-      [name]: value,
+      start: formatDate(modifyDate, modifyTime),
     });
-  };
+  }, [modifyDate, modifyTime]);
+
   const patchOption = {
     method: "PATCH",
     headers: {
@@ -89,30 +102,42 @@ const ModifyForm = ({}) => {
 
       <input
         type='text'
+        id='eventTitle'
         defaultValue={modifyingEvent.title}
         name='title'
-        onChange={handleInputChange}
+        onChange={(e) =>
+          setUpdateEvent({ ...updateEvent, title: e.target.value })
+        }
       />
-
-      <h3>Event date</h3>
+      <label htmlFor='eventDate'>
+        <h3>Event date</h3>
+      </label>
 
       <input
+        id='eventDate'
         type='date'
         name='start'
-        onChange={(e) =>
-          setUpdateEvent({
-            ...updateEvent,
-            start: new Date(`${e.target.value} 09:00 UTC`).toISOString(),
-            end: new Date(`${e.target.value} 10:00 UTC`).toISOString(),
-          })
-        }
-       />
-<input type="time" name="" id="" />
+        onChange={(e) => setModifyDate(e.target.value)}
+        value={modifyDate}
+      />
+
+      <label htmlFor='eventTime'>
+        <h3>Event time</h3>
+      </label>
+      <input
+        type='time'
+        name='eventTime'
+        id='eventTime'
+        value={modifyTime}
+        onChange={(e) => setModifyTime(e.target.value)}
+      />
 
       <select
         name='theme'
         id='theme'
-        onChange={handleInputChange}
+        onChange={(e) =>
+          setUpdateEvent({ ...updateEvent, theme: e.target.value })
+        }
         defaultValue={modifyingEvent.theme}
       >
         <option value='blue'>Blue Theme</option>

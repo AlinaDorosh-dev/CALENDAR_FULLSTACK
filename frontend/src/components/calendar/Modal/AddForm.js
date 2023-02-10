@@ -11,29 +11,22 @@ const AddForm = ({ month, year }) => {
   // if (visible) {
   //   titleRef.current.focus();
   // }
+  const [startTime, setStartTime] = useState("09:00");
+  const startEvent = new Date(
+    `${month}-${new Date(date).getDate()}-${year} ${startTime} UTC`
+  ).toISOString();
 
   useEffect(() => {
     setNewEvent({
       ...newEvent,
       start: startEvent,
-      end: endEvent,
-    });
+       });
   }, [date]);
-  const [startTime, setStartTime] = useState("09:00");
+ 
 
-  const startEvent = new Date(
-    `${month}-${new Date(date).getDate()}-${year} ${startTime} UTC`
-  ).toISOString();
-
-  const endEvent = new Date(
-    `${month}-${new Date(date).getDate()}-${year} 21:00 UTC`
-  ).toISOString();
-
-  
-  const [newEvent, setNewEvent] = useState({
+    const [newEvent, setNewEvent] = useState({
     title: "",
     start: startEvent,
-    end: endEvent,
     theme: "purple",
   });
 
@@ -59,8 +52,7 @@ const AddForm = ({ month, year }) => {
     setNewEvent({
       title: "",
       start: startEvent,
-      end: endEvent,
-      theme: "purple",
+           theme: "purple",
     });
     setVisible(!visible);
   };

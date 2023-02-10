@@ -15,12 +15,10 @@ const setEvent = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please add a text to your event");
   }
-  const { title, start, end, allDay, theme } = req.body;
+  const { title, start, theme } = req.body;
   const newEvent = await Event.create({
     title,
     start,
-    end,
-    allDay,
     user: req.user.id,
     theme,
   });

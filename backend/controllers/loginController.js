@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const LoginModel = require("../models/loginModel");
 const { generateToken } = require("../middleware/tokenMidlware");
-const { getFutureDate } = require("../utils/dateGenerator");
 
 const register = async (req, res) => {
   try {
@@ -14,9 +13,8 @@ const register = async (req, res) => {
       password: await bcrypt.hash(req.body.password, 10),
       role: req.body.role,
       name: req.body.name,
-      registerAt: getFutureDate(2025, 2030),
-      lastLogin: getFutureDate(2031, 2035),
-      isActive: false,
+      registerAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
     });
     data
       .save()
@@ -28,8 +26,6 @@ const register = async (req, res) => {
         })
       )
       .catch((error) => {
-        // console.log(Object.keys(error));
-        // console.log(error.code);
         if (error.code == 11000) {
           console.log("Clave duplicada");
           return res.status(409).json({
@@ -72,12 +68,7 @@ const login = async (req, res) => {
         };
         const token = generateToken(user, false);
         const refreshToken = generateToken(user, true);
-        const lastLoginYear = parseInt(
-          data.lastLogin.toISOString().slice(0, 4)
-        );
-        console.log(lastLoginYear);
-
-        data.lastLogin = getFutureDate(lastLoginYear + 6, +lastLoginYear + 1);
+       
         await data.save();
         res.status(200).json({
           status: "succeeded",
@@ -87,12 +78,11 @@ const login = async (req, res) => {
             role: data.role,
             token,
             refreshToken,
-            lastLogin:data.lastLogin
+            lastLogin: data.lastLogin,
           },
           error: null,
         });
-        console.log(`You have logged with ${data.email}`);
-      } else {
+              } else {
         res.status(401).json({
           status: "failed",
           data: null,

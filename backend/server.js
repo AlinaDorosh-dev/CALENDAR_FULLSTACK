@@ -1,10 +1,9 @@
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
-const colors = require("colors");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-// const { errorHandler } = require("./middleware/errorMiddleware");
+
 
 //almacenar la cadena de conexion
 const mongoString = process.env.DATABASE_URL;

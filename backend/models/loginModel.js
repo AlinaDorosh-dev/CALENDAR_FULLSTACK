@@ -31,13 +31,8 @@ const loginSchema = new Schema({
     type: Date,
     immutable: true,
   },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
   lastLogin: {
     type: Date,
-    default: ()=> Date.now().toISOString(),
   },
 });
 
