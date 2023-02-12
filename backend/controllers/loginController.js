@@ -1,7 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const LoginModel = require("../models/loginModel");
 const { generateToken } = require("../middleware/tokenMidlware");
@@ -68,21 +66,22 @@ const login = async (req, res) => {
         };
         const token = generateToken(user, false);
         const refreshToken = generateToken(user, true);
-       
         await data.save();
+        const { name, _id, email, role, lastLogin } = data;
         res.status(200).json({
           status: "succeeded",
           data: {
-            id: data._id,
-            email: data.email,
-            role: data.role,
+            name,
+            id: _id,
+            email,
+            role,
             token,
             refreshToken,
-            lastLogin: data.lastLogin,
+            lastLogin,
           },
           error: null,
         });
-              } else {
+      } else {
         res.status(401).json({
           status: "failed",
           data: null,
@@ -109,7 +108,7 @@ const refresh = (req, res) => {
   if (!req.user) {
     return res.status(400).send("Access denied");
   }
-  const { _id, email, role, exp } = req.user;
+  const { _id, email, role } = req.user;
   res.status(200).json({
     status: "Succeeded",
     data: {
@@ -120,4 +119,23 @@ const refresh = (req, res) => {
   });
 };
 
-module.exports = { register, login, refresh };
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await LoginModel.findById(req.params.id);
+
+  // Check for user
+  if (!req.user || !user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const updatedUser = await LoginModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json({ status: "succeeded", updatedUser, error: null });
+});
+module.exports = { register, login, refresh, updateUser };

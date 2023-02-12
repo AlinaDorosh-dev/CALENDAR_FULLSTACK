@@ -5,7 +5,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useContext } from "react";
-import { CalendarContext } from "./calendarProvider/calendarProvider";
+import { CalendarContext } from "../../providers/calendarProvider";
 
 const CalendarHeader = () => {
 

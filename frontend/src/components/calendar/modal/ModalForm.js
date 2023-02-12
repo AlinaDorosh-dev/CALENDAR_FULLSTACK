@@ -2,17 +2,15 @@ import classes from "./ModalForm.module.css";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { CalendarContext } from "../calendarProvider/calendarProvider";
+import { CalendarContext } from "../../../providers/calendarProvider";
 import ModifyForm from "./ModifyForm";
 import AddForm from "./AddForm";
 const ModalForm = ({ month, year }) => {
   const {
     visible,
     setVisible,
-    date,
     modify,
     setModify,
-    modifyingEvent,
     setModifyingEvent,
   } = useContext(CalendarContext);
 
@@ -36,6 +34,7 @@ const ModalForm = ({ month, year }) => {
 
           {!modify && <AddForm month={month} year={year} />}
           {modify && <ModifyForm />}
+           
         </div>
       </div>
       <div className={classes["md-overlay"]} />

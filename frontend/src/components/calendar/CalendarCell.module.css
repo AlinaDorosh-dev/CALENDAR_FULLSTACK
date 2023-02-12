@@ -14,3 +14,7 @@
 .today{
  background-color:#f4c095 ;
 }
+
+.cell:hover{
+  background-color: #f4c0952c ;
+}

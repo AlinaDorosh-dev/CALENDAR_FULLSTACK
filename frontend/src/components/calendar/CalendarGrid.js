@@ -1,9 +1,9 @@
 import classes from "./CalendarGrid.module.css";
 import CalendarCell from "./CalendarCell";
 import { useContext } from "react";
-import { CalendarContext } from "./calendarProvider/calendarProvider";
+import { CalendarContext } from "../../providers/calendarProvider";
 import ReactDOM from "react-dom";
-import ModalForm from "./Modal/ModalForm";
+import ModalForm from "./modal/ModalForm";
 import CalendarEvent from "./CalendarEvent";
 
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];

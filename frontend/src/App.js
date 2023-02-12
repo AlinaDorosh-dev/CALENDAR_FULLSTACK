@@ -5,21 +5,26 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useState } from "react";
 import Header from "./components/Header";
 import MainPage from "./views/MainPage";
 import RegisterPage from "./views/RegisterPage";
 import ErrorPage from "./views/ErrorPage";
 import CalendarPage from "./views/CalendarPage";
-import Calendar from "./components/calendar/Calendar";
-import CalendarProvider from "./components/calendar/calendarProvider/calendarProvider";
+import CalendarProvider from "./providers/calendarProvider";
+
 function App() {
+  const [loggedUser, setLoggedUser] = useState({});
   return (
-    // <Calendar/>
     <Router>
-      <Header />
+      <Header loggedUser={loggedUser} />
+
       <Routes>
         <Route index element={<Navigate replace to='/login' />} />
-        <Route path='/login' element={<MainPage />} />
+        <Route
+          path='/login'
+          element={<MainPage setLoggedUser={setLoggedUser} />}
+        />
         <Route path='/signup' element={<RegisterPage />} />
         <Route
           path='/calendar'

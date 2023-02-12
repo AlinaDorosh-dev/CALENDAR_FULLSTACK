@@ -1,12 +1,10 @@
 import classes from "./MainPage.module.css"
 import LoginForm from "../components/LoginForm";
 
-const MainPage = () => {
+const MainPage = ({setLoggedUser}) => {
   return (
     <div className={classes["main-page"]}>
-     
-
-      <LoginForm />
+          <LoginForm  setLoggedUser={setLoggedUser} />
     </div>
   );
 };

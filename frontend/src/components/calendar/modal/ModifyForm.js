@@ -1,6 +1,6 @@
 import classes from "./ModalForm.module.css";
 import { useState, useContext, useEffect } from "react";
-import { CalendarContext } from "../calendarProvider/calendarProvider";
+import { CalendarContext } from "../../../providers/calendarProvider";
 import apiRequest from "../../../utils/apiRequest";
 
 //IsoString returns one hour less. Getting rid of this difference and formatting the date

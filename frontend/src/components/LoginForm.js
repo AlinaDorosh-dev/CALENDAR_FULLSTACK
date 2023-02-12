@@ -2,7 +2,7 @@ import classes from "./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiRequest from "../utils/apiRequest";
-const LoginForm = () => {
+const LoginForm = ({setLoggedUser}) => {
   const emailRef = useRef();
 
   const navigate = useNavigate();
@@ -46,19 +46,39 @@ const LoginForm = () => {
       if (data.error === "Wrong email or password") {
         setErrMsg(data.error);
         setSuccess(false);
+      } else {
+        setLoggedUser(data.data);
+        const { token, refreshToken, id } = data.data;
+        // set token to localstorage item
+        localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        //udate users last login date
+        try {
+          const patchUrl = `${LOGIN_URL}/${id}`;
+          const patchOption = {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": token,
+            },
+            body: JSON.stringify({
+              lastLogin: new Date()
+            }),
+          };
+          apiRequest(patchUrl, patchOption);
+          
+        } catch (error) {
+          setErrMsg(error.message);
+        }
+
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/calendar");
+        }, 1500);
       }
-
-      const { token, refreshToken } = data.data;
-
-      // set token to localstorage item
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      setSuccess(true);
-      setTimeout(() => {
-        navigate("/calendar");
-      }, 1500);
     } catch (error) {
-      console.log(error.message);
+      setErrMsg(error.message);
     }
   };
 

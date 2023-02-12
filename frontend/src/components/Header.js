@@ -1,9 +1,14 @@
-import React from 'react'
-
-const Header = () => {
+import classes from "./Header.module.css"
+import MyProfile from "./MyProfile"
+import UserUpdateProvider from "../providers/userUpdateProvider"
+const Header = ({loggedUser}) => {
   return (
-    <header>
-        <h1 style={{textAlign:"center", letterSpacing:"7px"}}>MY CALENDAR</h1>
+    <header className={classes.header}>
+      { loggedUser.name &&  <UserUpdateProvider>
+       <MyProfile loggedUser={loggedUser}/>
+       </UserUpdateProvider>}
+        <h1 >MY CALENDAR</h1>
+     
     </header>
   )
 }

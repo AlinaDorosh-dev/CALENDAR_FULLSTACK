@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import apiRequest from "../../../utils/apiRequest";
+
+import apiRequest from "../utils/apiRequest";
 export const CalendarContext = createContext(null);
 
 const CalendarProvider = ({ children }) => {
   const EVENTS_URL = "http://localhost:8001/calendar/events/";
+  const REFRESH_URL = "http://localhost:8001/auth/refresh";
   const months = [
     "January",
     "February",
@@ -18,6 +20,7 @@ const CalendarProvider = ({ children }) => {
     "November",
     "December",
   ];
+
   //variables for initial state asignment
   const years = ["2022", "2023", "2024"];
   const currentDate = new Date();
@@ -44,6 +47,7 @@ const CalendarProvider = ({ children }) => {
 
   //state for initial fetch
   const [events, setEvents] = useState([]);
+
   //state for open and close modal window
   const [visible, setVisible] = useState(false);
 
@@ -53,17 +57,42 @@ const CalendarProvider = ({ children }) => {
   const [modify, setModify] = useState(false);
   const [modifyingEvent, setModifyingEvent] = useState({});
 
-  const getEventsOption = {
+  const token = localStorage.getItem("token");
+  const refresh = localStorage.getItem("refreshToken");
+
+  const getEventsWithToken = {
     method: "GET",
     headers: {
-      "auth-token": localStorage.getItem("token"),
+      "auth-token": token,
+    },
+  };
+
+  const getRefreshToken = {
+    method: "GET",
+    headers: {
+      "auth-token": refresh,
     },
   };
 
   const apiGetEvents = async () => {
-    const response = await apiRequest(EVENTS_URL, getEventsOption);
-    const data = await response.json();
-    setEvents(data.events);
+    try {
+      const response = await apiRequest(EVENTS_URL, getEventsWithToken);
+      const data = await response.json();
+      setEvents(data.events);
+    } catch (error) {
+      console.log(error.message);
+      if (error.message.includes("Expired token")) {
+        try {
+          const response = await apiRequest(REFRESH_URL, getRefreshToken);
+          const data = await response.json();
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("refreshToken", data.refreshToken);
+          console.log("refreshed");
+        } catch (error) {
+          console.log("refresh error", error.message);
+        }
+      }
+    }
   };
 
   useEffect(() => {
