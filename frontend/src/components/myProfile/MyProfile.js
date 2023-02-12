@@ -1,13 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
-import classes from "./Header.module.css";
+import { useRef, useEffect, useContext } from "react";
+import classes from "../Header.module.css";
 import ReactDOM from "react-dom";
 import ProfileModal from "./ProfileModal";
-
-const MyProfile = ({ loggedUser }) => {
- 
+import { UserUpdateContext } from "../../providers/userUpdateProvider";
+const MyProfile = ({ loggedUser ,setLoggedUser}) => {
+  const {
+    openProfile,
+    setOpenProfile,
+    setChangeEmail,
+    setOpenModal,
+    setChangePassword,
+    setDeleteUser,
+  } = useContext(UserUpdateContext);
   const navigate = useNavigate();
   const profileRef = useRef(null);
   //Close profile menu when clicking outside
@@ -44,24 +51,14 @@ const MyProfile = ({ loggedUser }) => {
 
   const handleLogout = () => {
     localStorage.clear();
+    setLoggedUser({});
     navigate("/login");
   };
 
   return (
     <>
       {ReactDOM.createPortal(
-        <ProfileModal
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          changeEmail={changeEmail}
-          setChangeEmail={setChangeEmail}
-          changePassword={changePassword}
-          setChangePassword={setChangePassword}
-          deleteUser={deleteUser}
-          setDeleteUser={setDeleteUser}
-          loggedUser={loggedUser}
-
-        />,
+        <ProfileModal loggedUser={loggedUser} />,
         document.querySelector("#modal")
       )}
       <div className={classes["user-menu"]}>

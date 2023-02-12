@@ -17,7 +17,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState({});
   return (
     <Router>
-      <Header loggedUser={loggedUser} />
+      <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>
 
       <Routes>
         <Route index element={<Navigate replace to='/login' />} />

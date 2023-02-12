@@ -129,8 +129,8 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await LoginModel.findByIdAndUpdate(
-    req.params.id,
-    req.body,
+    req.params.id,req.body, 
+    // password: await bcrypt.hash(req.body.password, 10) ,
     {
       new: true,
     }

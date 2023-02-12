@@ -75,7 +75,7 @@ const LoginForm = ({setLoggedUser}) => {
         setSuccess(true);
         setTimeout(() => {
           navigate("/calendar");
-        }, 1500);
+        }, 1200);
       }
     } catch (error) {
       setErrMsg(error.message);
