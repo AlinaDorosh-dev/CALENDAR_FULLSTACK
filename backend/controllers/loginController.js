@@ -57,6 +57,8 @@ const login = async (req, res) => {
         req.body.password,
         data.password
       );
+      console.log(req.body.password, "req.body.password");
+      console.log(data.password, "data.password");
       if (validPassword) {
         // generar un token
         const user = {
@@ -129,8 +131,10 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   const updatedUser = await LoginModel.findByIdAndUpdate(
-    req.params.id,req.body, 
-    // password: await bcrypt.hash(req.body.password, 10) ,
+    req.params.id,
+    req.body.password
+      ? { ...req.body, password: await bcrypt.hash(req.body.password, 10) }
+      : req.body,
     {
       new: true,
     }
