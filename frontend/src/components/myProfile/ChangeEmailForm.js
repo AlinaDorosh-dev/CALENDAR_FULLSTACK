@@ -1,8 +1,9 @@
-import apiRequest from "../../utils/apiRequest";
+import { APIRequest } from "../../utils/apiRequest";
+import { EMAIL_REGEX } from "../../utils/regEx";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect } from "react";
 import classes from "./ProfileModal.module.css";
-const ChangeEmailForm = ({ loggedUser, USER_URL }) => {
+const ChangeEmailForm = ({ loggedUser }) => {
   const {
     setOpenModal,
     setSuccess,
@@ -11,32 +12,28 @@ const ChangeEmailForm = ({ loggedUser, USER_URL }) => {
     success,
     validEmail,
     setValidEmail,
-    handleClose,setChangeEmail
+    handleClose,
+    setChangeEmail,
   } = useContext(UserUpdateContext);
   useEffect(() => {
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    setValidEmail(regex.test(newEmail));
+    setValidEmail(EMAIL_REGEX.test(newEmail));
   }, [newEmail]);
-  const patchUsersEmail = async () => {
+  const updateUsersEmail = async () => {
     try {
-      const response = await apiRequest(USER_URL, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({ email: newEmail }),
-      });
+      const response = await APIRequest.updateUser(
+        { email: newEmail },
+        loggedUser.id
+      );
+
       const data = await response.json();
       console.log(data);
       if (data.status === "succeeded") {
         setNewEmail("");
         setSuccess(true);
-        
+
         setTimeout(() => {
           setOpenModal(false);
-          setChangeEmail(false)
+          setChangeEmail(false);
           setSuccess(false);
         }, 2000);
       }
@@ -72,7 +69,7 @@ const ChangeEmailForm = ({ loggedUser, USER_URL }) => {
           <button
             type='submit'
             disabled={!newEmail || !validEmail ? true : false}
-            onClick={patchUsersEmail}
+            onClick={() => updateUsersEmail()}
             className={newEmail && validEmail ? classes.confirm : "disabled"}
           >
             Confirm

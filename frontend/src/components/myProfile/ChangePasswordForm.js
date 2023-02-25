@@ -1,4 +1,5 @@
-import apiRequest from "../../utils/apiRequest";
+import { APIRequest } from "../../utils/apiRequest";
+import { PWD_REGEX } from "../../utils/regEx";
 import {
   faCheck,
   faTimes,
@@ -8,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect, useState } from "react";
 import classes from "./ProfileModal.module.css";
-const ChangePasswordForm = ({ USER_URL, handleClose, loggedUser }) => {
+const ChangePasswordForm = ({ handleClose, loggedUser }) => {
   const [errMsg, setErrMsg] = useState("");
 
   const {
@@ -32,8 +33,7 @@ const ChangePasswordForm = ({ USER_URL, handleClose, loggedUser }) => {
   } = useContext(UserUpdateContext);
 
   useEffect(() => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-    setValidPassword(regex.test(newPassword));
+    setValidPassword(PWD_REGEX.test(newPassword));
     const match = newPassword === confirmPassword;
     setPasswordMatch(match);
   }, [newPassword, confirmPassword]);
@@ -41,22 +41,14 @@ const ChangePasswordForm = ({ USER_URL, handleClose, loggedUser }) => {
   useEffect(() => {
     setErrMsg("");
   }, [oldPassword, newPassword, confirmPassword]);
-  
-  const LOGIN_URL = "http://localhost:8001/auth/login";
 
   const changeUsersPassword = async () => {
+    //check if old password is correct
     try {
-      const postOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loggedUser.email,
-          password: oldPassword,
-        }),
-      };
-      const response = await apiRequest(LOGIN_URL, postOptions);
+      const response = await APIRequest.login({
+        email: loggedUser.email,
+        password: oldPassword,
+      });
       const data = await response.json();
       if (data.error === "Wrong email or password") {
         setErrMsg("Wrong old password, please try again");
@@ -65,15 +57,12 @@ const ChangePasswordForm = ({ USER_URL, handleClose, loggedUser }) => {
         setConfirmPassword("");
       } else {
         setErrMsg("");
+        //update password
         try {
-          const response = await apiRequest(USER_URL, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": localStorage.getItem("token"),
-            },
-            body: JSON.stringify({ password: newPassword }),
-          });
+          const response = await APIRequest.updateUser(
+            { password: newPassword },
+            loggedUser.id
+          );
           const data = await response.json();
           console.log(data);
           if (data.status === "succeeded") {

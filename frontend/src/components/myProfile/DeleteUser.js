@@ -20,13 +20,11 @@ const DeleteUser = ({ loggedUser, setLoggedUser, handleClose }) => {
     //delete all events
     if (usersEvents.length > 0) {
       usersEvents.forEach(async (event) => {
-        console.log(event._id);
         const deleteResponse = await APIRequest.deleteEvent(
           EVENTS_URL,
           event._id
         );
         const data = await deleteResponse.json();
-        console.log(data);
       });
     }
     //delete user
@@ -61,10 +59,10 @@ const DeleteUser = ({ loggedUser, setLoggedUser, handleClose }) => {
       )}
       <div className={classes.btns}>
         {" "}
-        <button className={classes.cancel} onClick={handleClose}>
+        <button className={classes.cancel} onClick={() => handleClose()}>
           Cancel
         </button>
-        <button className={classes.confirm} onClick={handleDeleteUser}>
+        <button className={classes.confirm} onClick={() => handleDeleteUser()}>
           Confirm
         </button>
       </div>

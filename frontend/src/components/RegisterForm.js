@@ -7,24 +7,14 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import apiRequest from "../utils/apiRequest";
+import { APIRequest } from "../utils/apiRequest";
+import{EMAIL_REGEX, PWD_REGEX, USER_REGEX} from "../utils/regEx";
 import {
   initialRegisterState,
   REGISTER,
   registerReducer,
 } from "../reducers/registerReducer";
 
-//Starts with lower or uppercase letter, followed by l/u case letter, number, hyphon(-) or underscore(_) // {from 4 to 24 char}
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-
-//Regex for validate Email
-const EMAIL_REGEX =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-//Regex for validate password
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-
-const USERS_API = "http://localhost:8001/auth/signup";
 
 const RegisterForm = () => {
   const nameRef = useRef(); //Set focus in user input when component loads
@@ -77,20 +67,12 @@ const RegisterForm = () => {
       return;
     }
 
-    const postOption = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const response = await APIRequest.register({
         email: state.email,
         password: state.pwd,
         name: state.userName,
-      }),
-    };
-
-    try {
-      const response = await apiRequest(USERS_API, postOption);
+      });
       if (response.ok) {
         dispatch({
           type: REGISTER.RESTORE_STATE,

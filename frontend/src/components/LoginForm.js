@@ -1,8 +1,8 @@
 import classes from "./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import apiRequest from "../utils/apiRequest";
-const LoginForm = ({setLoggedUser}) => {
+import { APIRequest } from "../utils/apiRequest";
+const LoginForm = ({ setLoggedUser }) => {
   const emailRef = useRef();
 
   const navigate = useNavigate();
@@ -12,7 +12,6 @@ const LoginForm = ({setLoggedUser}) => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const LOGIN_URL = "http://localhost:8001/auth/login";
   useEffect(() => {
     emailRef.current.focus();
   }, []);
@@ -26,17 +25,10 @@ const LoginForm = ({setLoggedUser}) => {
     try {
       setPwd("");
       setEmail("");
-      const postOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: pwd,
-        }),
-      };
-      const response = await apiRequest(LOGIN_URL, postOptions);
+      const response = await APIRequest.login({
+        email: email,
+        password: pwd,
+      });
       if (response === "Failed to fetch") {
         setErrMsg("Conection error. Please reload the app");
         setSuccess(false);
@@ -55,19 +47,12 @@ const LoginForm = ({setLoggedUser}) => {
 
         //udate users last login date
         try {
-          const patchUrl = `${LOGIN_URL}/${id}`;
-          const patchOption = {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "auth-token": token,
+          await APIRequest.updateUser(
+            {
+              lastLogin: new Date(),
             },
-            body: JSON.stringify({
-              lastLogin: new Date()
-            }),
-          };
-          apiRequest(patchUrl, patchOption);
-          
+            id
+          );
         } catch (error) {
           setErrMsg(error.message);
         }

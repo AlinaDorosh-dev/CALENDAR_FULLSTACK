@@ -28,7 +28,7 @@ const generateToken = (user, isRefreshToken) => {
     });
   } else {
     return jwt.sign(user, process.env.TOKEN_SECRET, {
-      expiresIn: "30m",
+      expiresIn: "7d",
     });
   }
 };

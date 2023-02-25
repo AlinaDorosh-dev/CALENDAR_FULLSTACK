@@ -1,3 +1,5 @@
+import{REGISTER_URL, LOGIN_URL } from '../config';
+
 const apiRequest = async (url = "", optionObj = null, errMsg = null) => {
   try {
     const response = await fetch(url, optionObj);
@@ -15,9 +17,9 @@ const apiRequest = async (url = "", optionObj = null, errMsg = null) => {
 export default apiRequest;
 
 export class APIRequest {
-  static async register(url, body) {
+  static async register(body) {
     try {
-      const response = await fetch(url, {
+      const response = await fetch(REGISTER_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,9 +34,9 @@ export class APIRequest {
     }
   }
 
-  static async login(url, body) {
+  static async login(body) {
     try {
-      const response = await fetch(url, {
+      const response = await fetch(LOGIN_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,9 +51,9 @@ export class APIRequest {
     }
   }
 
-  static async updateUser(url, body, id) {
+  static async updateUser(body, id) {
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${LOGIN_URL}/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

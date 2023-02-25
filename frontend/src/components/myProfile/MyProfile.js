@@ -6,7 +6,7 @@ import classes from "../Header.module.css";
 import ReactDOM from "react-dom";
 import ProfileModal from "./ProfileModal";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
-const MyProfile = ({ loggedUser ,setLoggedUser}) => {
+const MyProfile = ({ loggedUser, setLoggedUser }) => {
   const {
     openProfile,
     setOpenProfile,
@@ -32,20 +32,17 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
   };
 
   const handleEmail = () => {
-    console.log("email");
     setChangeEmail(true);
     setOpenModal(true);
     setOpenProfile(false);
   };
 
   const handlePassword = () => {
-    console.log("password");
     setChangePassword(true);
     setOpenModal(true);
     setOpenProfile(false);
   };
   const handleDelete = () => {
-    console.log("delete");
     setDeleteUser(true);
     setOpenModal(true);
     setOpenProfile(false);
@@ -60,7 +57,7 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <ProfileModal loggedUser={loggedUser}  setLoggedUser={setLoggedUser}/>,
+        <ProfileModal loggedUser={loggedUser} setLoggedUser={setLoggedUser} />,
         document.querySelector("#modal")
       )}
       <div className={classes["user-menu"]}>
@@ -71,7 +68,7 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
           >
             <FontAwesomeIcon icon={faUser} />
           </button>{" "}
-          <button className={classes.logout} onClick={handleLogout}>
+          <button className={classes.logout} onClick={() => handleLogout()}>
             Log out
           </button>
         </div>
@@ -79,9 +76,9 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
           <div className={classes.container} ref={profileRef}>
             <div className={classes.options}>
               <h4> Hello {loggedUser.name}! </h4>
-              <button onClick={handleEmail}>Change email</button>
-              <button onClick={handlePassword}>Change password</button>
-              <button onClick={handleDelete}>Delete my profile</button>
+              <button onClick={() => handleEmail()}>Change email</button>
+              <button onClick={() => handlePassword()}>Change password</button>
+              <button onClick={() => handleDelete()}>Delete my profile</button>
             </div>
           </div>
         )}
