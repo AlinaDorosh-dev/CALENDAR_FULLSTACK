@@ -17,7 +17,9 @@ function App() {
   const [loggedUser, setLoggedUser] = useState({});
   return (
     <Router>
-      <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>
+      <CalendarProvider>
+        <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
+      </CalendarProvider>
 
       <Routes>
         <Route index element={<Navigate replace to='/login' />} />

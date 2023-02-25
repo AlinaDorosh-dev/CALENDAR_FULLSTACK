@@ -42,6 +42,7 @@ const UserUpdateProvider = ({ children }) => {
     setNewPassword("");
     setConfirmPassword("");
     setNewEmail("");
+    setSuccess(false);
   };
 
   return (

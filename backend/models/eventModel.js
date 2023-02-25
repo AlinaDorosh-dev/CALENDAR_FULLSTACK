@@ -11,6 +11,6 @@ const eventSchema = new Schema({
   theme: { type: String, default: "blue" },
 });
 
-const event = mongoose.model("event", eventSchema);
+const Event = mongoose.model("Event", eventSchema);
 
-module.exports = event;
+module.exports = Event;

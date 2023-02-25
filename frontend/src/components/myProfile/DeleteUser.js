@@ -1,15 +1,75 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import classes from "./ProfileModal.module.css";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const DeleteUser = ({ loggedUser, USER_URL, handleClose }) => {
-  return <div>
-    <h3>Are you sure you want to delete your account?</h3>
-    <p className={classes.error}> <FontAwesomeIcon icon={faInfoCircle} /> This action cannot be undone. All your planned events will disappear.</p>
-    <div className={classes.btns}> <button className= {classes.cancel}onClick={handleClose}>Cancel</button>
-    <button className={classes.confirm}>Confirm</button></div>
-  </div>;
+import { APIRequest } from "../../utils/apiRequest";
+import { LOGIN_URL, EVENTS_URL } from "../../config";
+
+const DeleteUser = ({ loggedUser, setLoggedUser, handleClose }) => {
+  const navigate = useNavigate();
+  const { success, setSuccess, setOpenModal } = useContext(UserUpdateContext);
+
+  const handleDeleteUser = async () => {
+    //Check if user has events
+    const eventResponse = await APIRequest.getEventsByUser(EVENTS_URL);
+    const events = await eventResponse.json();
+    const usersEvents = events.events;
+    //delete all events
+    if (usersEvents.length > 0) {
+      usersEvents.forEach(async (event) => {
+        console.log(event._id);
+        const deleteResponse = await APIRequest.deleteEvent(
+          EVENTS_URL,
+          event._id
+        );
+        const data = await deleteResponse.json();
+        console.log(data);
+      });
+    }
+    //delete user
+    const response = await APIRequest.deleteUser(LOGIN_URL, loggedUser.id);
+    console.log(response);
+    if (response.status === 200) {
+      setSuccess(true);
+      setTimeout(() => {
+        setLoggedUser({});
+        setOpenModal(false);
+        setSuccess(false);
+        navigate("/");
+      }, 1500);
+    }
+  };
+  return (
+    <div>
+      <h3>Are you sure you want to delete your account?</h3>
+      {!success && (
+        <p className={classes.error}>
+          {" "}
+          <FontAwesomeIcon icon={faInfoCircle} /> This action cannot be undone.
+          All your planned events will disappear.
+        </p>
+      )}
+      {success && (
+        <p className={classes.success}>
+          {" "}
+          <FontAwesomeIcon icon={faInfoCircle} /> User {loggedUser.name} deleted
+          successfully.
+        </p>
+      )}
+      <div className={classes.btns}>
+        {" "}
+        <button className={classes.cancel} onClick={handleClose}>
+          Cancel
+        </button>
+        <button className={classes.confirm} onClick={handleDeleteUser}>
+          Confirm
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default DeleteUser;

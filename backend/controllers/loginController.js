@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
-
+const Event = require("../models/eventModel");
 const LoginModel = require("../models/loginModel");
 const { generateToken } = require("../middleware/tokenMidlware");
 
@@ -141,4 +141,32 @@ const updateUser = asyncHandler(async (req, res) => {
 
   res.status(200).json({ status: "succeeded", updatedUser, error: null });
 });
-module.exports = { register, login, refresh, updateUser };
+
+// @desc Delete a user
+// @route DELETE /users
+// @access Private
+const deleteUser = async (req, res) => {
+  const user = await LoginModel.findById(req.params.id).exec();
+
+  // Check for user
+  if (!req.user || !user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  // Does the user still have assigned events?
+  const event = await Event.findOne({ user: req.params.id }).lean().exec()
+  if (event) {
+      return res.status(400).json({ message: 'User has assigned events' })
+  }
+
+  
+
+  const result = await user.deleteOne()
+
+  const reply = `Username ${result.name} with ID ${result._id} deleted`
+
+  res.json(reply)
+}
+
+module.exports = { register, login, refresh, updateUser, deleteUser };

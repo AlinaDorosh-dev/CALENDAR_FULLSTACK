@@ -7,7 +7,7 @@ import ChangeEmailForm from "./ChangeEmailForm";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 
-const ProfileModal = ({ loggedUser }) => {
+const ProfileModal = ({ loggedUser, setLoggedUser }) => {
   // console.log(loggedUser);
   const { handleClose, changeEmail, changePassword, openModal, deleteUser } =
     useContext(UserUpdateContext);
@@ -39,7 +39,11 @@ const ProfileModal = ({ loggedUser }) => {
 
           {/* render user delete confirmation */}
           {deleteUser && (
-            <DeleteUser loggedUser={loggedUser} USER_URL={USER_URL} handleClose={handleClose}/>
+            <DeleteUser
+              loggedUser={loggedUser}
+              setLoggedUser={setLoggedUser}
+              handleClose={handleClose}
+            />
           )}
         </div>
       </div>

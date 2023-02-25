@@ -1,11 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-
+import { EVENTS_URL, REFRESH_URL } from "../config";
 import apiRequest from "../utils/apiRequest";
 export const CalendarContext = createContext(null);
 
 const CalendarProvider = ({ children }) => {
-  const EVENTS_URL = "http://localhost:8001/calendar/events/";
-  const REFRESH_URL = "http://localhost:8001/auth/refresh";
+  
   const months = [
     "January",
     "February",

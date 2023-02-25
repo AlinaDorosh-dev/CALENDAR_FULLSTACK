@@ -60,7 +60,7 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <ProfileModal loggedUser={loggedUser} />,
+        <ProfileModal loggedUser={loggedUser}  setLoggedUser={setLoggedUser}/>,
         document.querySelector("#modal")
       )}
       <div className={classes["user-menu"]}>
