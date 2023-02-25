@@ -22,9 +22,10 @@ const setEvent = asyncHandler(async (req, res) => {
     user: req.user.id,
     theme,
   });
-
+console.log(req.user);
   res.status(200).json({ status: "succeeded", newEvent, error: null });
 });
+
 const updateEvent = asyncHandler(async (req, res) => {
   const event = await Event.findById(req.params.id);
 

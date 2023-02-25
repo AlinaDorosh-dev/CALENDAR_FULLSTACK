@@ -20,11 +20,10 @@ const AddForm = ({ month, year }) => {
     setNewEvent({
       ...newEvent,
       start: startEvent,
-       });
-  }, [date]);
- 
+    });
+  }, [date, startTime]);
 
-    const [newEvent, setNewEvent] = useState({
+  const [newEvent, setNewEvent] = useState({
     title: "",
     start: startEvent,
     theme: "purple",
@@ -49,10 +48,11 @@ const AddForm = ({ month, year }) => {
       console.log(error.message);
       console.log("need to check refresh token");
     }
+    setStartTime("09:00");
     setNewEvent({
       title: "",
       start: startEvent,
-           theme: "purple",
+      theme: "purple",
     });
     setVisible(!visible);
   };

@@ -1,19 +1,18 @@
 import classes from "./ProfileModal.module.css";
-import {
-  faCircleXmark
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-
+import DeleteUser from "./DeleteUser";
 import ChangeEmailForm from "./ChangeEmailForm";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
+
 const ProfileModal = ({ loggedUser }) => {
   // console.log(loggedUser);
-  const {handleClose,changeEmail,changePassword, openModal} = useContext(UserUpdateContext);
- 
-  const USER_URL = `http://localhost:8001/auth/login/${loggedUser.id}`;
+  const { handleClose, changeEmail, changePassword, openModal, deleteUser } =
+    useContext(UserUpdateContext);
 
+  const USER_URL = `http://localhost:8001/auth/login/${loggedUser.id}`;
 
   return (
     <>
@@ -34,7 +33,14 @@ const ProfileModal = ({ loggedUser }) => {
           )}
 
           {/* render form for password changing */}
-          {changePassword && <ChangePasswordForm USER_URL={USER_URL}  />}
+          {changePassword && (
+            <ChangePasswordForm loggedUser={loggedUser} USER_URL={USER_URL} />
+          )}
+
+          {/* render user delete confirmation */}
+          {deleteUser && (
+            <DeleteUser loggedUser={loggedUser} USER_URL={USER_URL} handleClose={handleClose}/>
+          )}
         </div>
       </div>
       <div className={classes["md-overlay"]} />

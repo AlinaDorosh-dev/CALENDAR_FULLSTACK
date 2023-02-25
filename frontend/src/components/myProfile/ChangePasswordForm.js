@@ -6,13 +6,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import classes from "./ProfileModal.module.css";
-const ChangePasswordForm = ({ USER_URL, handleClose }) => {
+const ChangePasswordForm = ({ USER_URL, handleClose, loggedUser }) => {
+  const [errMsg, setErrMsg] = useState("");
+
   const {
     success,
     setSuccess,
     setOpenModal,
+    oldPassword,
+    setOldPassword,
     newPassword,
     setNewPassword,
     validPassword,
@@ -34,29 +38,61 @@ const ChangePasswordForm = ({ USER_URL, handleClose }) => {
     setPasswordMatch(match);
   }, [newPassword, confirmPassword]);
 
-  const patchUsersPassword = async () => {
+  useEffect(() => {
+    setErrMsg("");
+  }, [oldPassword, newPassword, confirmPassword]);
+  
+  const LOGIN_URL = "http://localhost:8001/auth/login";
+
+  const changeUsersPassword = async () => {
     try {
-      const response = await apiRequest(USER_URL, {
-        method: "PATCH",
+      const postOptions = {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ password: newPassword }),
-      });
+        body: JSON.stringify({
+          email: loggedUser.email,
+          password: oldPassword,
+        }),
+      };
+      const response = await apiRequest(LOGIN_URL, postOptions);
       const data = await response.json();
-      console.log(data);
-      if (data.status === "succeeded") {
+      if (data.error === "Wrong email or password") {
+        setErrMsg("Wrong old password, please try again");
+        setOldPassword("");
         setNewPassword("");
         setConfirmPassword("");
-        setSuccess(true);
-        setTimeout(() => {
-          setOpenModal(false);
-          setSuccess(false);
-        }, 2000);
+      } else {
+        setErrMsg("");
+        try {
+          const response = await apiRequest(USER_URL, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("token"),
+            },
+            body: JSON.stringify({ password: newPassword }),
+          });
+          const data = await response.json();
+          console.log(data);
+          if (data.status === "succeeded") {
+            setOldPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            setErrMsg("");
+            setSuccess(true);
+            setTimeout(() => {
+              setOpenModal(false);
+              setSuccess(false);
+            }, 2000);
+          }
+        } catch (error) {
+          setErrMsg(error.message);
+        }
       }
     } catch (error) {
-      console.log(error.message);
+      setErrMsg(error.message);
     }
   };
 
@@ -66,7 +102,18 @@ const ChangePasswordForm = ({ USER_URL, handleClose }) => {
       {success && (
         <p className={classes.success}>Password changed successfully</p>
       )}
+      {errMsg && <p className={classes.error}>{errMsg}</p>}
       <form onSubmit={(e) => e.preventDefault()}>
+        <label htmlFor='old_password'>
+          <h4>Old password:</h4>
+        </label>
+        <input
+          type='password'
+          id='old_password'
+          required
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+        />
         <label htmlFor='password'>
           <h4>
             New password:
@@ -167,6 +214,7 @@ const ChangePasswordForm = ({ USER_URL, handleClose }) => {
           <button
             type='submit'
             disabled={
+              !oldPassword ||
               !newPassword ||
               !validPassword ||
               !confirmPassword ||
@@ -174,9 +222,13 @@ const ChangePasswordForm = ({ USER_URL, handleClose }) => {
                 ? true
                 : false
             }
-            onClick={patchUsersPassword}
+            onClick={changeUsersPassword}
             className={
-              newPassword && validPassword && confirmPassword && passwordMatch
+              oldPassword &&
+              newPassword &&
+              validPassword &&
+              confirmPassword &&
+              passwordMatch
                 ? classes.confirm
                 : "disabled"
             }

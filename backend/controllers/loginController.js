@@ -57,10 +57,9 @@ const login = async (req, res) => {
         req.body.password,
         data.password
       );
-      console.log(req.body.password, "req.body.password");
-      console.log(data.password, "data.password");
+     
       if (validPassword) {
-        // generar un token
+        // generate token
         const user = {
           id: data._id,
           email: data.email,
@@ -129,7 +128,7 @@ const updateUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
-
+//encrypt password if it is provided
   const updatedUser = await LoginModel.findByIdAndUpdate(
     req.params.id,
     req.body.password

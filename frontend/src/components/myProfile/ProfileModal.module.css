@@ -153,6 +153,16 @@
   display: block;
 }
 
+.error{
+  background-color: rgb(232, 73, 59);
+  border-radius: 0.3rem;
+  color: rgb(41, 39, 39);
+  padding: 0.25rem;
+  width: 90%;
+  margin: 1rem auto;
+  display: block;
+}
+
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.3rem;

@@ -10,7 +10,7 @@ const UserUpdateProvider = ({ children }) => {
   const [changeEmail, setChangeEmail] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
   const [deleteUser, setDeleteUser] = useState(false);
-  
+
   //state for opening modal
   const [openModal, setOpenModal] = useState(false);
 
@@ -19,6 +19,8 @@ const UserUpdateProvider = ({ children }) => {
   const [validEmail, setValidEmail] = useState(false);
 
   //states for password changing
+  const [oldPassword, setOldPassword] = useState("");
+
   const [newPassword, setNewPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
@@ -29,13 +31,14 @@ const UserUpdateProvider = ({ children }) => {
   const [pwdConfirmFocus, setPwdConfirmFocus] = useState(false);
 
   const [success, setSuccess] = useState(false);
-  
-//reset all states to initial values when closing modal
+
+  //reset all states to initial values when closing modal
   const handleClose = () => {
     setOpenModal(false);
     setChangeEmail(false);
     setChangePassword(false);
     setDeleteUser(false);
+    setOldPassword("");
     setNewPassword("");
     setConfirmPassword("");
     setNewEmail("");
@@ -58,6 +61,8 @@ const UserUpdateProvider = ({ children }) => {
         setNewEmail,
         validEmail,
         setValidEmail,
+        oldPassword,
+        setOldPassword,
         newPassword,
         setNewPassword,
         validPassword,

@@ -47,6 +47,8 @@ const MyProfile = ({ loggedUser ,setLoggedUser}) => {
   const handleDelete = () => {
     console.log("delete");
     setDeleteUser(true);
+    setOpenModal(true);
+    setOpenProfile(false);
   };
 
   const handleLogout = () => {
