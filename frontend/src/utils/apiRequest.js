@@ -1,22 +1,7 @@
-import{REGISTER_URL, LOGIN_URL } from '../config';
-
-const apiRequest = async (url = "", optionObj = null, errMsg = null) => {
-  try {
-    const response = await fetch(url, optionObj);
-    if (!response.ok) {
-      // throw Error("Please reload the app");
-      return response;
-    }
-    return response;
-  } catch (err) {
-    errMsg = err.message;
-    return errMsg;
-  }
-};
-
-export default apiRequest;
+import { REGISTER_URL, LOGIN_URL, EVENTS_URL, REFRESH_URL } from "../config";
 
 export class APIRequest {
+  
   static async register(body) {
     try {
       const response = await fetch(REGISTER_URL, {
@@ -69,9 +54,9 @@ export class APIRequest {
     }
   }
 
-  static async deleteUser(url, id) {
+  static async deleteUser(id) {
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${LOGIN_URL}/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -86,9 +71,9 @@ export class APIRequest {
     }
   }
 
-  static async getEventsByUser(url) {
+  static async getEventsByUser() {
     try {
-      const response = await fetch(url, {
+      const response = await fetch(EVENTS_URL, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -97,14 +82,60 @@ export class APIRequest {
       });
       return response;
     } catch (err) {
+      if (err.message.includes("Expired token")) {
+        const response = await fetch(REFRESH_URL, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("refreshToken"),
+          },
+        });
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("refreshToken", data.refreshToken);
+      }
       let errMsg = err.message;
       return errMsg;
     }
   }
 
-  static async deleteEvent(url, id) {
+  static async postEvent(body) {
     try {
-      const response = await fetch(`${url}${id}`, {
+      const response = await fetch(EVENTS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(body),
+      });
+      return response;
+    } catch (err) {
+      let errMsg = err.message;
+      return errMsg;
+    }
+  }
+
+  static async updateEvent(body, id) {
+    try {
+      const response = await fetch(`${EVENTS_URL}${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(body),
+      });
+      return response;
+    } catch (err) {
+      let errMsg = err.message;
+      return errMsg;
+    }
+  }
+
+  static async deleteEvent(id) {
+    try {
+      const response = await fetch(`${EVENTS_URL}${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

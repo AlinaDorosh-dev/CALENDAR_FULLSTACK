@@ -1,16 +1,13 @@
 import classes from "./ModalForm.module.css";
 import { CalendarContext } from "../../../providers/calendarProvider";
-import apiRequest from "../../../utils/apiRequest";
+import { APIRequest } from "../../../utils/apiRequest";
 import { useState, useContext, useEffect, useRef } from "react";
 const AddForm = ({ month, year }) => {
-  const { EVENTS_URL, events, setEvents, visible, setVisible, date } =
+  const { events, setEvents, visible, setVisible, date } =
     useContext(CalendarContext);
 
   const titleRef = useRef(null);
 
-  // if (visible) {
-  //   titleRef.current.focus();
-  // }
   const [startTime, setStartTime] = useState("09:00");
   const startEvent = new Date(
     `${month}-${new Date(date).getDate()}-${year} ${startTime} UTC`
@@ -29,24 +26,14 @@ const AddForm = ({ month, year }) => {
     theme: "purple",
   });
 
-  const postEventWithToken = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("token"),
-    },
-    body: JSON.stringify(newEvent),
-  };
-
   const submitNewEvent = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiRequest(EVENTS_URL, postEventWithToken);
+      const response = await APIRequest.postEvent(newEvent);
       const data = await response.json();
       setEvents([...events, data.newEvent]);
     } catch (error) {
       console.log(error.message);
-      console.log("need to check refresh token");
     }
     setStartTime("09:00");
     setNewEvent({

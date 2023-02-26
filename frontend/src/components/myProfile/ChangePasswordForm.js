@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect, useState } from "react";
 import classes from "./ProfileModal.module.css";
-const ChangePasswordForm = ({ handleClose, loggedUser }) => {
+const ChangePasswordForm = ({ loggedUser }) => {
   const [errMsg, setErrMsg] = useState("");
 
   const {
@@ -30,6 +30,7 @@ const ChangePasswordForm = ({ handleClose, loggedUser }) => {
     setPasswordMatch,
     pwdConfirmFocus,
     setPwdConfirmFocus,
+    handleClose,
   } = useContext(UserUpdateContext);
 
   useEffect(() => {
@@ -63,8 +64,9 @@ const ChangePasswordForm = ({ handleClose, loggedUser }) => {
             { password: newPassword },
             loggedUser.id
           );
+          
           const data = await response.json();
-          console.log(data);
+
           if (data.status === "succeeded") {
             setOldPassword("");
             setNewPassword("");

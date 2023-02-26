@@ -3,7 +3,7 @@ import { EMAIL_REGEX } from "../../utils/regEx";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect } from "react";
 import classes from "./ProfileModal.module.css";
-const ChangeEmailForm = ({ loggedUser }) => {
+const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
   const {
     setOpenModal,
     setSuccess,
@@ -15,6 +15,7 @@ const ChangeEmailForm = ({ loggedUser }) => {
     handleClose,
     setChangeEmail,
   } = useContext(UserUpdateContext);
+
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(newEmail));
   }, [newEmail]);
@@ -26,11 +27,11 @@ const ChangeEmailForm = ({ loggedUser }) => {
       );
 
       const data = await response.json();
-      console.log(data);
+
       if (data.status === "succeeded") {
         setNewEmail("");
+        setLoggedUser({ ...loggedUser, email: newEmail });
         setSuccess(true);
-
         setTimeout(() => {
           setOpenModal(false);
           setChangeEmail(false);

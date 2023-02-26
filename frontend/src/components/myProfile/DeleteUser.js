@@ -6,29 +6,27 @@ import classes from "./ProfileModal.module.css";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { APIRequest } from "../../utils/apiRequest";
-import { LOGIN_URL, EVENTS_URL } from "../../config";
 
-const DeleteUser = ({ loggedUser, setLoggedUser, handleClose }) => {
+const DeleteUser = ({ loggedUser, setLoggedUser }) => {
   const navigate = useNavigate();
-  const { success, setSuccess, setOpenModal } = useContext(UserUpdateContext);
+
+  const { success, setSuccess, setOpenModal, handleClose } =
+    useContext(UserUpdateContext);
 
   const handleDeleteUser = async () => {
     //Check if user has events
-    const eventResponse = await APIRequest.getEventsByUser(EVENTS_URL);
+    const eventResponse = await APIRequest.getEventsByUser();
     const events = await eventResponse.json();
     const usersEvents = events.events;
     //delete all events
     if (usersEvents.length > 0) {
       usersEvents.forEach(async (event) => {
-        const deleteResponse = await APIRequest.deleteEvent(
-          EVENTS_URL,
-          event._id
-        );
+        const deleteResponse = await APIRequest.deleteEvent(event._id);
         const data = await deleteResponse.json();
       });
     }
     //delete user
-    const response = await APIRequest.deleteUser(LOGIN_URL, loggedUser.id);
+    const response = await APIRequest.deleteUser(loggedUser.id);
     console.log(response);
     if (response.status === 200) {
       setSuccess(true);

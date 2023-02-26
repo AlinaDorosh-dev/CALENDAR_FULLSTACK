@@ -8,11 +8,8 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 
 const ProfileModal = ({ loggedUser, setLoggedUser }) => {
-  // console.log(loggedUser);
   const { handleClose, changeEmail, changePassword, openModal, deleteUser } =
     useContext(UserUpdateContext);
-
-  const USER_URL = `http://localhost:8001/auth/login/${loggedUser.id}`;
 
   return (
     <>
@@ -29,21 +26,18 @@ const ProfileModal = ({ loggedUser, setLoggedUser }) => {
           />
           {/* render form for email changing */}
           {changeEmail && (
-            <ChangeEmailForm loggedUser={loggedUser} USER_URL={USER_URL} />
+            <ChangeEmailForm
+              loggedUser={loggedUser}
+              setLoggedUser={setLoggedUser}
+            />
           )}
 
           {/* render form for password changing */}
-          {changePassword && (
-            <ChangePasswordForm loggedUser={loggedUser} USER_URL={USER_URL} />
-          )}
+          {changePassword && <ChangePasswordForm loggedUser={loggedUser} />}
 
           {/* render user delete confirmation */}
           {deleteUser && (
-            <DeleteUser
-              loggedUser={loggedUser}
-              setLoggedUser={setLoggedUser}
-              handleClose={handleClose}
-            />
+            <DeleteUser loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
           )}
         </div>
       </div>

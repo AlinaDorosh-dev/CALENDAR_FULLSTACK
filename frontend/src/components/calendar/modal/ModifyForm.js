@@ -1,7 +1,7 @@
 import classes from "./ModalForm.module.css";
 import { useState, useContext, useEffect } from "react";
 import { CalendarContext } from "../../../providers/calendarProvider";
-import apiRequest from "../../../utils/apiRequest";
+import { APIRequest } from "../../../utils/apiRequest";
 
 //IsoString returns one hour less. Getting rid of this difference and formatting the date
 let formatDate = (date, time) => {
@@ -12,7 +12,6 @@ let formatDate = (date, time) => {
 
 const ModifyForm = ({}) => {
   const {
-    EVENTS_URL,
     events,
     setEvents,
     modifyingEvent,
@@ -39,27 +38,11 @@ const ModifyForm = ({}) => {
     });
   }, [modifyDate, modifyTime]);
 
-  const patchOption = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("token"),
-    },
-    body: JSON.stringify(updateEvent),
-  };
-  const deleteOption = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("token"),
-    },
-  };
-
   const submitModifiedEvent = async () => {
     try {
-      const response = await apiRequest(
-        `${EVENTS_URL}${modifyingEvent._id}`,
-        patchOption
+      const response = await APIRequest.updateEvent(
+        updateEvent,
+        modifyingEvent._id
       );
       const data = await response.json();
 
@@ -77,14 +60,10 @@ const ModifyForm = ({}) => {
 
   const handleDeleteEvent = async () => {
     try {
-      const response = await apiRequest(
-        `${EVENTS_URL}${modifyingEvent._id}`,
-        deleteOption
-      );
+      const response = await APIRequest.deleteEvent(modifyingEvent._id);
       const data = await response.json();
       const listEvents = events.filter((ev) => ev._id !== data.id);
       setEvents(listEvents);
-      console.log(data, "data");
       setVisible(!visible);
       setModify(false);
       setModifyingEvent({});
@@ -148,10 +127,13 @@ const ModifyForm = ({}) => {
       </select>
 
       <div className={classes.buttons}>
-        <button className={classes.delete} onClick={handleDeleteEvent}>
+        <button className={classes.delete} onClick={() => handleDeleteEvent()}>
           Delete this event
         </button>
-        <button className={classes.modify} onClick={submitModifiedEvent}>
+        <button
+          className={classes.modify}
+          onClick={() => submitModifiedEvent()}
+        >
           Modify event
         </button>
       </div>

@@ -1,10 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import { EVENTS_URL, REFRESH_URL } from "../config";
-import apiRequest from "../utils/apiRequest";
+import { APIRequest } from "../utils/apiRequest";
 export const CalendarContext = createContext(null);
 
 const CalendarProvider = ({ children }) => {
-  
   const months = [
     "January",
     "February",
@@ -56,52 +54,23 @@ const CalendarProvider = ({ children }) => {
   const [modify, setModify] = useState(false);
   const [modifyingEvent, setModifyingEvent] = useState({});
 
-  const token = localStorage.getItem("token");
-  const refresh = localStorage.getItem("refreshToken");
-
-  const getEventsWithToken = {
-    method: "GET",
-    headers: {
-      "auth-token": token,
-    },
-  };
-
-  const getRefreshToken = {
-    method: "GET",
-    headers: {
-      "auth-token": refresh,
-    },
-  };
-
-  const apiGetEvents = async () => {
-    try {
-      const response = await apiRequest(EVENTS_URL, getEventsWithToken);
-      const data = await response.json();
-      setEvents(data.events);
-    } catch (error) {
-      console.log(error.message);
-      if (error.message.includes("Expired token")) {
-        try {
-          const response = await apiRequest(REFRESH_URL, getRefreshToken);
-          const data = await response.json();
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("refreshToken", data.refreshToken);
-          console.log("refreshed");
-        } catch (error) {
-          console.log("refresh error", error.message);
-        }
-      }
-    }
-  };
 
   useEffect(() => {
+    const apiGetEvents = async () => {
+      try {
+        const response = await APIRequest.getEventsByUser();
+        const data = await response.json();
+        setEvents(data.events);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
     apiGetEvents();
   }, []);
 
   return (
     <CalendarContext.Provider
       value={{
-        EVENTS_URL,
         events,
         setEvents,
         visible,
