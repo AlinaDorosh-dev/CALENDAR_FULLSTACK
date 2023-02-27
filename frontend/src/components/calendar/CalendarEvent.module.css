@@ -10,23 +10,23 @@
 }
 
 .event:hover {
-  color: #e79135;
+  color:var(--warning);
 }
 
 .purple {
-  background-color:rgba(189, 44, 189, 0.567)
+  background-color:var(--purple-event);
 }
 .red {
-  background-color: rgba(232, 33, 33, 0.786);
+  background-color: var(--red-event);
 }
 .blue {
-  background-color: rgba(5, 54, 249, 0.664);
+  background-color:var(--blue-event);
 }
 
 .green {
-  background-color: rgba(9, 116, 9, 0.592);
+  background-color: var(--green-event);
 }
 
 .yellow {
-  background-color: rgba(224, 193, 13, 0.884);
+  background-color: var(--yellow-event);
 }

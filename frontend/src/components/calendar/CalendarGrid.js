@@ -31,7 +31,6 @@ const CalendarGrid = () => {
 
   const clickEvent = (e, event) => {
     e.stopPropagation();
-    console.log("event clicked", event);
     setModifyingEvent(event);
     setModify(true);
     setVisible(!visible);
@@ -48,7 +47,10 @@ const CalendarGrid = () => {
           {/* Map days names */}
 
           {weekdays.map((day) => (
-            <div key={day}  style={{backgroundColor:"#1d7874", color: "antiquewhite"}}>
+            <div
+              key={day}
+              style={{ backgroundColor: "#1d7874", color: "antiquewhite" }}
+            >
               <h4>{day}</h4>
             </div>
           ))}
@@ -71,10 +73,18 @@ const CalendarGrid = () => {
              ${new Date().getDate()} ${new Date().getFullYear()} 09:00 UTC`).toISOString();
 
             const isToday = calendarDay === currentDate;
-
-            const thisDayEvents = events.filter(
-              (event) => event.start.substr(0, 10) === calendarDay.substr(0, 10)
-            );
+            //Filter events for this day and sort them by time
+            const thisDayEvents = events
+              .filter(
+                (event) =>
+                  event.start.substr(0, 10) === calendarDay.substr(0, 10)
+              )
+              .sort((a, b) => {
+                if (a.start.substr(11, 2) === b.start.substr(11, 2)) {
+                  return a.start.substr(14, 2) - b.start.substr(14, 2);
+                }
+                return a.start.substr(11, 2) - b.start.substr(11, 2);
+              });
 
             return (
               <CalendarCell
@@ -91,9 +101,7 @@ const CalendarGrid = () => {
                       color={event.theme}
                     >
                       {/* if title lenth is larger then 20, show only first part of title */}
-                      {event.start.substr(11,5)} {event.title.substr(0, 20)}
-
-
+                      {event.start.substr(11, 5)} {event.title.substr(0, 20)}
                       {event.title.length > 20 && <>...</>}
                     </CalendarEvent>
                   ))}

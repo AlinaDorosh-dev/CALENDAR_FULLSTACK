@@ -10,7 +10,7 @@ let formatDate = (date, time) => {
   return dateIsoString;
 };
 
-const ModifyForm = ({}) => {
+const ModifyForm = () => {
   const {
     events,
     setEvents,
@@ -111,6 +111,9 @@ const ModifyForm = ({}) => {
         onChange={(e) => setModifyTime(e.target.value)}
       />
 
+      <label htmlFor='theme'>
+        <h3>Theme color:</h3>
+      </label>
       <select
         name='theme'
         id='theme'
@@ -119,11 +122,21 @@ const ModifyForm = ({}) => {
         }
         defaultValue={modifyingEvent.theme}
       >
-        <option value='blue'>Blue Theme</option>
-        <option value='red'>Red Theme</option>
-        <option value='yellow'>Yellow Theme</option>
-        <option value='green'>Green Theme</option>
-        <option value='purple'>Purple Theme</option>
+        <option value='blue' className={classes.blue}>
+          Azure
+        </option>
+        <option value='red' className={classes.red}>
+          Wine
+        </option>
+        <option value='yellow' className={classes.yellow}>
+          Sunflower
+        </option>
+        <option value='green' className={classes.green}>
+          Cucumber
+        </option>
+        <option value='purple' className={classes.purple}>
+          Lavander
+        </option>
       </select>
 
       <div className={classes.buttons}>

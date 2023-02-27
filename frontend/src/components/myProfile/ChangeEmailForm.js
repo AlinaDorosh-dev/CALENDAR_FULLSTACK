@@ -2,6 +2,12 @@ import { APIRequest } from "../../utils/apiRequest";
 import { EMAIL_REGEX } from "../../utils/regEx";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faTimes,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import classes from "./ProfileModal.module.css";
 const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
   const {
@@ -14,6 +20,8 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
     setValidEmail,
     handleClose,
     setChangeEmail,
+    errMsg,
+    setErrMsg,
   } = useContext(UserUpdateContext);
 
   useEffect(() => {
@@ -39,14 +47,18 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
         }, 2000);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
+      setErrMsg("This email is already in use, please try again");
+      setNewEmail("");
     }
   };
   return (
     <div>
       <h2>Change email</h2>
+
       <p>You logged with email: {loggedUser.email}</p>
       {success && <p className={classes.success}>Email changed successfully</p>}
+      {errMsg && <p className={classes.error}>{errMsg}</p>}
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor='newEmail'>
           <h4>New email:</h4>
@@ -55,10 +67,19 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
           type='email'
           name='newEmail'
           id='newEmail'
+          value={newEmail}
           onChange={(e) => {
             setNewEmail(e.target.value);
           }}
         />
+        <p
+          className={
+            newEmail && !validEmail ? classes.instructions : classes.offscreen
+          }
+        >
+          <FontAwesomeIcon icon={faInfoCircle} />
+          Please insert valid e-mail
+        </p>
         <div className={classes.btns}>
           <button
             type='button'

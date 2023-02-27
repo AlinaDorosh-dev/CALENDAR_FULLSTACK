@@ -32,6 +32,8 @@ const UserUpdateProvider = ({ children }) => {
 
   const [success, setSuccess] = useState(false);
 
+  const [errMsg, setErrMsg] = useState("");
+
   //reset all states to initial values when closing modal
   const handleClose = () => {
     setOpenModal(false);
@@ -43,6 +45,7 @@ const UserUpdateProvider = ({ children }) => {
     setConfirmPassword("");
     setNewEmail("");
     setSuccess(false);
+    setErrMsg("");
   };
 
   return (
@@ -78,6 +81,8 @@ const UserUpdateProvider = ({ children }) => {
         setPwdConfirmFocus,
         success,
         setSuccess,
+        errMsg,
+        setErrMsg,
         handleClose,
       }}
     >

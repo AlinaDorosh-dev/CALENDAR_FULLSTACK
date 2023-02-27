@@ -51,6 +51,7 @@ const ChangePasswordForm = ({ loggedUser }) => {
         password: oldPassword,
       });
       const data = await response.json();
+      console.log(data);
       if (data.error === "Wrong email or password") {
         setErrMsg("Wrong old password, please try again");
         setOldPassword("");
@@ -64,7 +65,7 @@ const ChangePasswordForm = ({ loggedUser }) => {
             { password: newPassword },
             loggedUser.id
           );
-          
+
           const data = await response.json();
 
           if (data.status === "succeeded") {
@@ -94,6 +95,7 @@ const ChangePasswordForm = ({ loggedUser }) => {
         <p className={classes.success}>Password changed successfully</p>
       )}
       {errMsg && <p className={classes.error}>{errMsg}</p>}
+
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor='old_password'>
           <h4>Old password:</h4>

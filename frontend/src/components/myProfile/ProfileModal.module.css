@@ -62,8 +62,8 @@
 
 .md-content .close {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   font-size: 1.6rem;
   cursor: pointer;
 }
@@ -90,12 +90,11 @@
   transition: all 0.15s ease-in-out;
   margin: 0.1rem auto 1rem;
   display: block;
-  color: #243763;
+  color: var(--dark-blue);
   font-size: 0.9rem;
 }
 .md-content input:focus {
-  border: 1px solid transparent;
-  box-shadow: 0 0 0 0.2rem rgba(9, 77, 180, 0.486);
+  box-shadow: 0 0 0 2px rgba(9, 77, 180, 0.486);
   z-index: 2;
 }
 
@@ -130,7 +129,7 @@
   cursor: pointer;
 }
 .cancel:hover{
-  color: #d98324;
+  color: var(--warning);
 }
 
 .confirm{
@@ -140,13 +139,13 @@
   cursor: pointer;
 }
 .confirm:hover{
-  color: #d98324;
+  color: var(--warning);
 }
 
 .success {
-  background-color: rgb(120, 223, 120);
+  background-color:var(--success);
   border-radius: 0.3rem;
-  color: rgb(41, 39, 39);
+  color: var(--dark-grey);
   padding: 0.25rem;
   width: 90%;
   margin: 1rem auto;
@@ -154,9 +153,9 @@
 }
 
 .error{
-  background-color: rgb(232, 73, 59);
+  background-color: var(--danger);
   border-radius: 0.3rem;
-  color: rgb(41, 39, 39);
+  color: var(--dark-grey);
   padding: 0.25rem;
   width: 90%;
   margin: 1rem auto;
@@ -166,8 +165,8 @@
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.3rem;
-  background: rgb(41, 39, 39);
-  color: #fff;
+  background: var(--warning);
+  color:var(--dark-grey);
   padding: 0.25rem;
   width: 90%;
   margin: 1rem auto;
@@ -190,13 +189,13 @@
 }
 
 .valid {
-  color: limegreen;
+  color: var(--success);
   margin-left: 0.5rem;
   font-size: 1.2rem;
 }
 
 .invalid {
-  color: red;
+  color: var(--danger);
   margin-left: 0.5rem;
   font-size: 1.2rem;
 }

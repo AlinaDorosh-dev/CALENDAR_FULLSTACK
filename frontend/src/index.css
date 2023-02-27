@@ -1,9 +1,19 @@
-/* font-family: 'Alegreya', serif;
-font-family: 'Sora', sans-serif; */
-
 :root {
   box-sizing: border-box;
   font-size: 0.785em;
+  --dark-grey: rgb(41, 39, 39);
+  --dark-blue: rgb(36, 55, 99);
+  --light-blue: rgb(87, 155, 177);
+  --dark-green: rgb(29, 120, 116);
+  --success:rgb(76, 175, 80);
+  --danger:rgb(207, 60, 60);
+  --warning:rgba(255, 152, 0, 0.7);
+
+  --purple-event: rgba(189, 44, 189, 0.567);
+  --red-event: rgba(232, 33, 33, 0.786);
+  --blue-event: rgba(5, 54, 249, 0.664);
+  --green-event: rgba(9, 116, 9, 0.592);
+  --yellow-event: rgba(224, 193, 13, 0.884);
 }
 
 *,
@@ -18,8 +28,8 @@ font-family: 'Sora', sans-serif; */
 
 body {
   font-family: "Sora", sans-serif;
-  color: rgb(41, 39, 39);
-  background: #F8F4EA;
+  color: var(--dark-grey);
+  background: #f8f4ea;
   min-height: 100vh;
   padding: 1.5rem;
 }
@@ -31,27 +41,24 @@ h4,
 h5,
 h6 {
   font-family: "Alegreya", sans-serif;
-  color: #243763
+  color:var(--dark-blue);
 }
 
-h1{
+h1 {
   font-size: 3.5rem;
 }
-h2{
+h2 {
   font-size: 2.25rem;
 }
-h3{
+h3 {
   font-size: 1.5rem;
 }
-h4{
-  font-size: 1,1rem;
+h4 {
+  font-size: 1, 1rem;
 }
-h5{
-  font-size: .9rem;
+h5 {
+  font-size: 0.9rem;
 }
-h6{
-  font-size: .7rem;
+h6 {
+  font-size: 0.7rem;
 }
-
-
-

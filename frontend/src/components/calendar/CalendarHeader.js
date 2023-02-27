@@ -56,13 +56,13 @@ const CalendarHeader = () => {
 
       <div className={classes.btn}>
         <button
-          disabled={month === "January" && year === "2022" ? true : false}
+          disabled={month === "January" && year === "2023" ? true : false}
           onClick={() => prevMonth()}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <button
-          disabled={month === "December" && year === "2024" ? true : false}
+          disabled={month === "December" && year === "2030" ? true : false}
           onClick={() => nextMonth()}
         >
           <FontAwesomeIcon icon={faChevronRight} />

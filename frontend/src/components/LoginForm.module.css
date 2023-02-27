@@ -6,7 +6,8 @@
   border-radius: 0.3rem;
   padding: 1rem 2rem;
   box-shadow: 10px 18px 18px 3px rgba(0, 0, 0, 0.1);
-  background-color: #579BB1;}
+  background-color: var(--light-blue);
+}
 
 .login-form input {
   padding: 0.5rem;
@@ -14,13 +15,12 @@
   border-radius: 0.5rem;
   background-color: antiquewhite;
   transition: all 0.15s ease-in-out;
-  margin: .3rem auto 1rem;
+  margin: 0.3rem auto 1rem;
   display: block;
 }
 
 .login-form input:focus {
-  border: 1px solid transparent;
-  box-shadow: 0 0 0 0.2rem rgba(9, 77, 180, 0.486);
+  box-shadow: 0 0 0 2px rgba(9, 77, 180, 0.486);
   z-index: 2;
 }
 
@@ -32,14 +32,14 @@
   border-radius: 0.5rem;
   transition: all 0.15s ease-in-out;
   color: white;
-  background-color: #243763
+  background-color: var(--dark-blue);
 }
 
 .login-form .submit-btn:hover {
-  color: #d98324;
+  color: var(--warning);
   cursor: pointer;
 }
-.login-form h1{
+.login-form h1 {
   font-size: 2.5rem;
   text-align: center;
 }
@@ -49,24 +49,24 @@
   font-size: 1.5rem;
 }
 
-.sign-up{
- color: rgb(41, 39, 39);
- line-height: 2rem;
- font-weight: bold;
- font-size: .9rem;
+.sign-up {
+  color: var(--dark-grey);
+  line-height: 2rem;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
-.sign-up a{
-  color:antiquewhite;
+.sign-up a {
+  color: antiquewhite;
   font-size: 1.1rem;
 }
 
-.sign-up a:hover{
-  color: #d98324;
+.sign-up a:hover {
+  color: var(--warning);
 }
 
-.errMsg{
-  background-color: rgb(207, 60, 60);
+.errMsg {
+  background-color: var(--danger);
   border-radius: 0.3rem;
   color: #fff;
   padding: 0.25rem;
@@ -76,9 +76,9 @@
 }
 
 .success {
-  background-color: rgb(120, 223, 120);
+  background-color: var(--success);
   border-radius: 0.3rem;
-  color: rgb(41, 39, 39);
+  color:var(--dark-grey);
   padding: 0.25rem;
   width: 90%;
   margin: 1rem auto;

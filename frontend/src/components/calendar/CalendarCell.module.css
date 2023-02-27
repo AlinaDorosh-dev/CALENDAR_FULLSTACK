@@ -7,8 +7,8 @@
   /* color: antiquewhite; */
   font-weight: bold;
   padding: .3rem;
-  overflow-y: hidden;
-  color: #243763;
+  overflow-y: auto;
+  color: var(--dark-blue);
 }
 
 .today{

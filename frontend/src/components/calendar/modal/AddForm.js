@@ -9,6 +9,7 @@ const AddForm = ({ month, year }) => {
   const titleRef = useRef(null);
 
   const [startTime, setStartTime] = useState("09:00");
+
   const startEvent = new Date(
     `${month}-${new Date(date).getDate()}-${year} ${startTime} UTC`
   ).toISOString();
@@ -26,8 +27,7 @@ const AddForm = ({ month, year }) => {
     theme: "purple",
   });
 
-  const submitNewEvent = async (e) => {
-    e.preventDefault();
+  const submitNewEvent = async () => {
     try {
       const response = await APIRequest.postEvent(newEvent);
       const data = await response.json();
@@ -85,7 +85,9 @@ const AddForm = ({ month, year }) => {
         value={startTime}
         onChange={(e) => setStartTime(e.target.value)}
       />
-
+      <label htmlFor='theme'>
+        <h3>Theme color:</h3>
+      </label>
       <select
         name='theme'
         id='theme'
@@ -93,19 +95,19 @@ const AddForm = ({ month, year }) => {
         value={newEvent.theme}
       >
         <option value='blue' className={classes.blue}>
-          Blue Theme
+          Azure
         </option>
         <option value='red' className={classes.red}>
-          Red Theme
+          Wine
         </option>
         <option value='yellow' className={classes.yellow}>
-          Yellow Theme
+          Sunflower
         </option>
         <option value='green' className={classes.green}>
-          Green Theme
+          Cucumber
         </option>
         <option value='purple' className={classes.purple}>
-          Purple Theme
+          Lavander
         </option>
       </select>
 
@@ -117,7 +119,7 @@ const AddForm = ({ month, year }) => {
           className={
             newEvent.title && startTime ? classes.save : classes.disabled
           }
-          onClick={submitNewEvent}
+          onClick={() => submitNewEvent()}
           disabled={!newEvent.title || !startTime ? true : false}
         >
           Save event

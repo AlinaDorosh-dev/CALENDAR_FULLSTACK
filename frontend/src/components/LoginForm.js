@@ -60,7 +60,7 @@ const LoginForm = ({ setLoggedUser }) => {
         setSuccess(true);
         setTimeout(() => {
           navigate("/calendar");
-        }, 1200);
+        }, 1000);
       }
     } catch (error) {
       setErrMsg(error.message);
@@ -72,41 +72,43 @@ const LoginForm = ({ setLoggedUser }) => {
       <h1> Sign In</h1>
       {errMsg && <p className={classes.errMsg}>{errMsg}</p>}
       {success && <p className={classes.success}>Signed in successfully</p>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>
-          <h2>Email:</h2>
-        </label>
-        <input
-          type='text'
-          id='email'
-          ref={emailRef}
-          autoComplete='off'
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
-          placeholder='Email'
-        />
-        <label htmlFor='password'>
-          <h2>Password:</h2>
-        </label>
-        <input
-          type='password'
-          id='password'
-          onChange={(e) => setPwd(e.target.value)}
-          value={pwd}
-          required
-          placeholder='Password'
-        />
+      {!success && (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='email'>
+            <h2>Email:</h2>
+          </label>
+          <input
+            type='text'
+            id='email'
+            ref={emailRef}
+            autoComplete='off'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+            placeholder='Email'
+          />
+          <label htmlFor='password'>
+            <h2>Password:</h2>
+          </label>
+          <input
+            type='password'
+            id='password'
+            onChange={(e) => setPwd(e.target.value)}
+            value={pwd}
+            required
+            placeholder='Password'
+          />
 
-        <button className={classes["submit-btn"]}>Sign In</button>
+          <button className={classes["submit-btn"]}>Sign In</button>
 
-        <p className={classes["sign-up"]}>
-          Need an account? <br />
-          <span>
-            <Link to='/signup'>SIGN UP</Link>
-          </span>
-        </p>
-      </form>
+          <p className={classes["sign-up"]}>
+            Need an account? <br />
+            <span>
+              <Link to='/signup'>SIGN UP</Link>
+            </span>
+          </p>
+        </form>
+      )}
     </div>
   );
 };

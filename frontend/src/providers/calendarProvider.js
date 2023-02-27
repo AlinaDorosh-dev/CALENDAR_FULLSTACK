@@ -19,7 +19,7 @@ const CalendarProvider = ({ children }) => {
   ];
 
   //variables for initial state asignment
-  const years = ["2022", "2023", "2024"];
+  const years = ["2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
   const currentDate = new Date();
   const currentYear = new Date().getFullYear().toString();
   const currentMonth = months[currentDate.getMonth()];
