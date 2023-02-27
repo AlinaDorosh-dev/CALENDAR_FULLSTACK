@@ -10,7 +10,10 @@ import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect, useState } from "react";
 import classes from "./ProfileModal.module.css";
 const ChangePasswordForm = ({ loggedUser }) => {
-  const [errMsg, setErrMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   const {
     success,
@@ -40,8 +43,10 @@ const ChangePasswordForm = ({ loggedUser }) => {
   }, [newPassword, confirmPassword]);
 
   useEffect(() => {
-    setErrMsg("");
-  }, [oldPassword, newPassword, confirmPassword]);
+    if (focused) {
+      setErrorMsg("");
+    }
+  }, [focused]);
 
   const changeUsersPassword = async () => {
     //check if old password is correct
@@ -51,14 +56,14 @@ const ChangePasswordForm = ({ loggedUser }) => {
         password: oldPassword,
       });
       const data = await response.json();
-      console.log(data);
+
       if (data.error === "Wrong email or password") {
-        setErrMsg("Wrong old password, please try again");
+        setErrorMsg("Wrong old password, please try again");
         setOldPassword("");
         setNewPassword("");
         setConfirmPassword("");
       } else {
-        setErrMsg("");
+        setErrorMsg("");
         //update password
         try {
           const response = await APIRequest.updateUser(
@@ -72,7 +77,7 @@ const ChangePasswordForm = ({ loggedUser }) => {
             setOldPassword("");
             setNewPassword("");
             setConfirmPassword("");
-            setErrMsg("");
+            setErrorMsg("");
             setSuccess(true);
             setTimeout(() => {
               setOpenModal(false);
@@ -80,11 +85,11 @@ const ChangePasswordForm = ({ loggedUser }) => {
             }, 2000);
           }
         } catch (error) {
-          setErrMsg(error.message);
+          setErrorMsg(error.message);
         }
       }
     } catch (error) {
-      setErrMsg(error.message);
+      setErrorMsg(error.message);
     }
   };
 
@@ -94,7 +99,7 @@ const ChangePasswordForm = ({ loggedUser }) => {
       {success && (
         <p className={classes.success}>Password changed successfully</p>
       )}
-      {errMsg && <p className={classes.error}>{errMsg}</p>}
+      {errorMsg && <p className={classes.error}>{errorMsg}</p>}
 
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor='old_password'>
@@ -104,6 +109,8 @@ const ChangePasswordForm = ({ loggedUser }) => {
           type='password'
           id='old_password'
           required
+          onFocus={onFocus}
+          onBlur={onBlur}
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
         />
@@ -143,11 +150,9 @@ const ChangePasswordForm = ({ loggedUser }) => {
               : classes.offscreen
           }
         >
-          <FontAwesomeIcon icon={faInfoCircle} />
-          8 to 24 characters. <br />
-          Must include uppercase and lowercase letters, a number and a special
-          character. <br />
-          Allowed special characters:
+          <FontAwesomeIcon icon={faInfoCircle} />8 to 24 characters. Must
+          include uppercase and lowercase letters, a number and a special
+          character. Allowed special characters:
           <span aria-label='exclamation mark'> ! </span>
           <span aria-label='at symbol'> @ </span>
           <span aria-label='hashtag'> # </span>

@@ -230,7 +230,7 @@ const RegisterForm = () => {
               }
             >
               <FontAwesomeIcon icon={faInfoCircle} />
-              Please insert valid e-mail
+              Please enter valid e-mail
             </p>
 
             <label htmlFor='password'>
@@ -276,11 +276,9 @@ const RegisterForm = () => {
                   : classes.offscreen
               }
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
-              8 to 24 characters. <br />
-              Must include uppercase and lowercase letters, a number and a
-              special character. <br />
-              Allowed special characters:
+              <FontAwesomeIcon icon={faInfoCircle} />8 to 24 characters. Must
+              include uppercase and lowercase letters, a number and a special
+              character. Allowed special characters:
               <span aria-label='exclamation mark'> ! </span>
               <span aria-label='at symbol'> @ </span>
               <span aria-label='hashtag'> # </span>
@@ -354,7 +352,6 @@ const RegisterForm = () => {
             >
               Sign Up
             </button>
-
             <p className={classes["sign-in"]}>
               Already registered?
               <br />

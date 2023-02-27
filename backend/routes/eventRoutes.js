@@ -8,8 +8,10 @@ const {
 } = require("../controllers/eventController");
 const { verifyToken } = require("../middleware/tokenMidlware");
 
-router.route("/events").get(verifyToken,getEvents).post(verifyToken,setEvent);
-router.route("/events/:id").delete(verifyToken,deleteEvent).patch(verifyToken, updateEvent);
+router.route("/events").get(verifyToken, getEvents).post(verifyToken, setEvent);
+router
+  .route("/events/:id")
+  .delete(verifyToken, deleteEvent)
+  .patch(verifyToken, updateEvent);
 
-
-module.exports = router
+module.exports = router;

@@ -45,9 +45,7 @@ const AddForm = ({ month, year }) => {
   };
 
   const handleInputChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+    const { value, name } = e.target;
     setNewEvent({
       ...newEvent,
       [name]: value,
@@ -80,8 +78,6 @@ const AddForm = ({ month, year }) => {
         type='time'
         name='startTime'
         id='startTime'
-        min='07:00'
-        max='21:00'
         value={startTime}
         onChange={(e) => setStartTime(e.target.value)}
       />

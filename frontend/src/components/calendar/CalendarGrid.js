@@ -45,7 +45,6 @@ const CalendarGrid = () => {
       <div className={classes["calendar-container"]}>
         <div className={classes.calendar}>
           {/* Map days names */}
-
           {weekdays.map((day) => (
             <div
               key={day}
@@ -56,13 +55,11 @@ const CalendarGrid = () => {
           ))}
 
           {/* map empty cellls if month does not start on sunday */}
-
           {Array.from({ length: prefixDays }).map((_, index) => (
             <CalendarCell key={index} />
           ))}
 
           {/* map calentar days */}
-
           {Array.from({ length: daysNumber }).map((_, index) => {
             const mapedDay = index + 1;
             const calendarDay = new Date(
@@ -73,6 +70,7 @@ const CalendarGrid = () => {
              ${new Date().getDate()} ${new Date().getFullYear()} 09:00 UTC`).toISOString();
 
             const isToday = calendarDay === currentDate;
+
             //Filter events for this day and sort them by time
             const thisDayEvents = events
               .filter(

@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import classes from "./ProfileModal.module.css";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faExclamationTriangle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { APIRequest } from "../../utils/apiRequest";
 
@@ -43,20 +46,17 @@ const DeleteUser = ({ loggedUser, setLoggedUser }) => {
       <h3>Are you sure you want to delete your account?</h3>
       {!success && (
         <p className={classes.error}>
-          {" "}
-          <FontAwesomeIcon icon={faInfoCircle} /> This action cannot be undone.
-          All your planned events will disappear.
+          <FontAwesomeIcon icon={faExclamationTriangle} /> This action cannot be
+          undone. All your planned events will disappear.
         </p>
       )}
       {success && (
         <p className={classes.success}>
-          {" "}
           <FontAwesomeIcon icon={faInfoCircle} /> User {loggedUser.name} deleted
           successfully.
         </p>
       )}
       <div className={classes.btns}>
-        {" "}
         <button className={classes.cancel} onClick={() => handleClose()}>
           Cancel
         </button>

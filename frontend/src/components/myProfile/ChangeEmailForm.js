@@ -3,11 +3,7 @@ import { EMAIL_REGEX } from "../../utils/regEx";
 import { UserUpdateContext } from "../../providers/userUpdateProvider";
 import { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import classes from "./ProfileModal.module.css";
 const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
   const {
@@ -55,7 +51,6 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
   return (
     <div>
       <h2>Change email</h2>
-
       <p>You logged with email: {loggedUser.email}</p>
       {success && <p className={classes.success}>Email changed successfully</p>}
       {errMsg && <p className={classes.error}>{errMsg}</p>}
@@ -78,7 +73,7 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
-          Please insert valid e-mail
+          Please enter valid e-mail
         </p>
         <div className={classes.btns}>
           <button
@@ -86,11 +81,11 @@ const ChangeEmailForm = ({ loggedUser, setLoggedUser }) => {
             className={classes.cancel}
             onClick={() => handleClose()}
           >
-            Cancel{" "}
+            Cancel
           </button>
           <button
             type='submit'
-            disabled={!newEmail || !validEmail ? true : false}
+            disabled={!newEmail || !validEmail}
             onClick={() => updateUsersEmail()}
             className={newEmail && validEmail ? classes.confirm : "disabled"}
           >

@@ -6,13 +6,8 @@ import { CalendarContext } from "../../../providers/calendarProvider";
 import ModifyForm from "./ModifyForm";
 import AddForm from "./AddForm";
 const ModalForm = ({ month, year }) => {
-  const {
-    visible,
-    setVisible,
-    modify,
-    setModify,
-    setModifyingEvent,
-  } = useContext(CalendarContext);
+  const { visible, setVisible, modify, setModify, setModifyingEvent } =
+    useContext(CalendarContext);
 
   const handleClose = () => {
     setVisible(!visible);
@@ -31,10 +26,7 @@ const ModalForm = ({ month, year }) => {
             role='button'
             onClick={handleClose}
           />
-
-          {!modify && <AddForm month={month} year={year} />}
-          {modify && <ModifyForm />}
-           
+          {modify ? <ModifyForm /> : <AddForm month={month} year={year} />}
         </div>
       </div>
       <div className={classes["md-overlay"]} />

@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) => {
       next();
     } catch (error) {
       res.status(400).send("Expired token");
-      console.log("token expired")
+      console.log("token expired");
     }
   }
 };

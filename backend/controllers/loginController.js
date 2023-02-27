@@ -57,7 +57,7 @@ const login = async (req, res) => {
         req.body.password,
         data.password
       );
-     
+
       if (validPassword) {
         // generate token
         const user = {
@@ -128,7 +128,7 @@ const updateUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
-//encrypt password if it is provided
+  //encrypt password if it is provided
   const updatedUser = await LoginModel.findByIdAndUpdate(
     req.params.id,
     req.body.password
@@ -155,18 +155,16 @@ const deleteUser = async (req, res) => {
   }
 
   // Does the user still have assigned events?
-  const event = await Event.findOne({ user: req.params.id }).lean().exec()
+  const event = await Event.findOne({ user: req.params.id }).lean().exec();
   if (event) {
-      return res.status(400).json({ message: 'User has assigned events' })
+    return res.status(400).json({ message: "User has assigned events" });
   }
 
-  
+  const result = await user.deleteOne();
 
-  const result = await user.deleteOne()
+  const reply = `Username ${result.name} with ID ${result._id} deleted`;
 
-  const reply = `Username ${result.name} with ID ${result._id} deleted`
-
-  res.json(reply)
-}
+  res.json(reply);
+};
 
 module.exports = { register, login, refresh, updateUser, deleteUser };

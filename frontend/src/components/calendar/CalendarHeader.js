@@ -8,7 +8,6 @@ import { useEffect, useContext } from "react";
 import { CalendarContext } from "../../providers/calendarProvider";
 
 const CalendarHeader = () => {
-
   const {
     month,
     setMonth,
@@ -19,7 +18,7 @@ const CalendarHeader = () => {
     setDaysNumber,
     setPrefixDays,
     setSufixDays,
-    daysNumber
+    daysNumber,
   } = useContext(CalendarContext);
 
   useEffect(() => {

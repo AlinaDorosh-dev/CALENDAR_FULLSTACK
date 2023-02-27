@@ -39,8 +39,8 @@
 }
 
 .register-form .submit-btn:hover {
-  color: var(--warning);
   cursor: pointer;
+  box-shadow: -2px -2px 5px 0px #3a3939bf;
 }
 
 .register-form h2 {
@@ -53,7 +53,9 @@
   font-size: 0.75rem;
   border-radius: 0.3rem;
   background: var(--warning);
-  padding: 0.25rem;
+  color: var(--warning-text);
+  text-align: justify;
+  padding: 0.4rem;
   width: 90%;
   margin: 1rem auto;
   display: block;
@@ -71,7 +73,8 @@
 .alert-green {
   background-color: var(--success);
   border-radius: 0.3rem;
-  color: rgb(41, 39, 39);
+  color: var(--success-text);
+  text-align: center;
   padding: 0.25rem;
   width: 90%;
   margin: 1rem auto;
@@ -83,22 +86,23 @@
 }
 
 .valid {
-  color: var(--success);
+  color: var(--dark-green);
   margin-left: 0.5rem;
   font-size: 1.3rem;
 }
 
 .invalid {
-  color: var(--danger);
+  color: var(--wrong);
   margin-left: 0.5rem;
   font-size: 1.3rem;
 }
 
 .errmsg {
   background-color: var(--danger);
+  color: var(--danger-text);
   border-radius: 0.3rem;
   color: #fff;
-  padding: 0.25rem;
+  padding: 0.4rem;
   width: 90%;
   margin: 1rem auto;
   display: block;
@@ -121,5 +125,5 @@
 }
 
 .sign-in a:hover {
-  color: var(--warning);
+  color: var(--dark-green);
 }

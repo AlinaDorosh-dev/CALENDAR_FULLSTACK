@@ -36,8 +36,8 @@
 }
 
 .login-form .submit-btn:hover {
-  color: var(--warning);
   cursor: pointer;
+  box-shadow: -2px -2px 5px 0px #3a3939bf;
 }
 .login-form h1 {
   font-size: 2.5rem;
@@ -62,24 +62,26 @@
 }
 
 .sign-up a:hover {
-  color: var(--warning);
+  color: var(--dark-green);
 }
 
 .errMsg {
   background-color: var(--danger);
   border-radius: 0.3rem;
-  color: #fff;
-  padding: 0.25rem;
+  color: var(--danger-text);
+  padding: 0.5rem;
   width: 90%;
   margin: 1rem auto;
   display: block;
+  text-align: center;
 }
 
 .success {
   background-color: var(--success);
+  text-align: center;
   border-radius: 0.3rem;
-  color:var(--dark-grey);
-  padding: 0.25rem;
+  color: var(--success-text);
+  padding: 0.4rem;
   width: 90%;
   margin: 1rem auto;
   display: block;

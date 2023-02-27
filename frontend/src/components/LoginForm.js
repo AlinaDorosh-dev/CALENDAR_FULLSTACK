@@ -2,6 +2,8 @@ import classes from "./LoginForm.module.css";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { APIRequest } from "../utils/apiRequest";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 const LoginForm = ({ setLoggedUser }) => {
   const emailRef = useRef();
 
@@ -69,45 +71,51 @@ const LoginForm = ({ setLoggedUser }) => {
 
   return (
     <div className={classes["login-form"]}>
-      <h1> Sign In</h1>
-      {errMsg && <p className={classes.errMsg}>{errMsg}</p>}
+      {errMsg && (
+        <p className={classes.errMsg}>
+          <FontAwesomeIcon icon={faExclamationTriangle} /> {errMsg}
+        </p>
+      )}
       {success && <p className={classes.success}>Signed in successfully</p>}
       {!success && (
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='email'>
-            <h2>Email:</h2>
-          </label>
-          <input
-            type='text'
-            id='email'
-            ref={emailRef}
-            autoComplete='off'
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            required
-            placeholder='Email'
-          />
-          <label htmlFor='password'>
-            <h2>Password:</h2>
-          </label>
-          <input
-            type='password'
-            id='password'
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-            placeholder='Password'
-          />
+        <>
+          <h1> Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor='email'>
+              <h2>Email:</h2>
+            </label>
+            <input
+              type='text'
+              id='email'
+              ref={emailRef}
+              autoComplete='off'
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              required
+              placeholder='Email'
+            />
+            <label htmlFor='password'>
+              <h2>Password:</h2>
+            </label>
+            <input
+              type='password'
+              id='password'
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              required
+              placeholder='Password'
+            />
 
-          <button className={classes["submit-btn"]}>Sign In</button>
+            <button className={classes["submit-btn"]}>Sign In</button>
 
-          <p className={classes["sign-up"]}>
-            Need an account? <br />
-            <span>
-              <Link to='/signup'>SIGN UP</Link>
-            </span>
-          </p>
-        </form>
+            <p className={classes["sign-up"]}>
+              Need an account? <br />
+              <span>
+                <Link to='/signup'>SIGN UP</Link>
+              </span>
+            </p>
+          </form>
+        </>
       )}
     </div>
   );

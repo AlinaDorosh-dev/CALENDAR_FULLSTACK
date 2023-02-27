@@ -22,7 +22,7 @@ const setEvent = asyncHandler(async (req, res) => {
     user: req.user.id,
     theme,
   });
-console.log(req.user);
+  console.log(req.user);
   res.status(200).json({ status: "succeeded", newEvent, error: null });
 });
 

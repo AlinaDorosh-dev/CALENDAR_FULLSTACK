@@ -22,10 +22,12 @@ const ModifyForm = () => {
   } = useContext(CalendarContext);
 
   const [updateEvent, setUpdateEvent] = useState(modifyingEvent);
+
   //state for set default value in date-picker
   const [modifyDate, setModifyDate] = useState(
     new Date(modifyingEvent.start).toJSON().slice(0, 10)
   );
+
   //state for set default value in time-picker
   const [modifyTime, setModifyTime] = useState(
     new Date(modifyingEvent.start).toISOString().substr(11, 5)

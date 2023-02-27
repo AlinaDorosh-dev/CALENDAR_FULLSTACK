@@ -54,7 +54,7 @@
   position: relative;
   border-radius: 0.5rem;
   margin: 0 auto;
-  background-color: #579ab1da;
+  background-color: var(--super-light-blue);
   padding: 2rem;
   font-weight: bold;
   text-align: center;
@@ -80,7 +80,6 @@
 .md-content h4 {
   margin: 1rem 0 0.1rem 2rem;
   text-align: left;
- 
 }
 
 .md-content input {
@@ -114,36 +113,23 @@
 }
 
 .cancel {
-  background: #304352; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #d7d2cc,
-    #304352
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #d7d2cc,
-    #304352
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #d32f2f;
   color: #ffffff;
   cursor: pointer;
 }
-.cancel:hover{
-  color: var(--warning);
+.cancel:hover,
+.confirm:hover {
+  color: #f4c095;
 }
-
-.confirm{
+.confirm {
   cursor: pointer;
-  background: linear-gradient(to right top, #a82828, #e79135);
+  background: var(--dark-green);
   color: antiquewhite;
   cursor: pointer;
 }
-.confirm:hover{
-  color: var(--warning);
-}
 
 .success {
-  background-color:var(--success);
+  background-color: var(--success);
   border-radius: 0.3rem;
   color: var(--dark-grey);
   padding: 0.25rem;
@@ -152,22 +138,23 @@
   display: block;
 }
 
-.error{
+.error {
   background-color: var(--danger);
   border-radius: 0.3rem;
-  color: var(--dark-grey);
-  padding: 0.25rem;
+  color: var(--danger-text);
+  padding: 0.5rem;
   width: 90%;
   margin: 1rem auto;
   display: block;
+  font-size: 0.9rem;
 }
 
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.3rem;
   background: var(--warning);
-  color:var(--dark-grey);
-  padding: 0.25rem;
+  color: var(--warning-text);
+  padding: 0.4rem;
   width: 90%;
   margin: 1rem auto;
   display: block;
@@ -189,13 +176,13 @@
 }
 
 .valid {
-  color: var(--success);
+  color: var(--dark-green);
   margin-left: 0.5rem;
   font-size: 1.2rem;
 }
 
 .invalid {
-  color: var(--danger);
+  color: var(--wrong);
   margin-left: 0.5rem;
   font-size: 1.2rem;
 }
